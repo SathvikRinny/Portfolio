@@ -12,22 +12,22 @@ app.use(express.static('public'));
 
 // Serve index.html
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/index.html');
+    res.sendFile(__dirname + '/index.html');
 });
 
 // Serve resume.html
 app.get('/resume', (req, res) => {
-    res.sendFile(__dirname + '/public/resume.html');
+    res.sendFile(__dirname + '/resume.html');
 });
 
 // Serve certificate.html (Note: I corrected the typo in the filename)
 app.get('/certificate', (req, res) => {
-    res.sendFile(__dirname + '/public/certificate.html');
+    res.sendFile(__dirname + '/certificate.html');
 });
 
 // Serve contact.html
 app.get('/contact', (req, res) => {
-    res.sendFile(__dirname + '/public/contact.html');
+    res.sendFile(__dirname + '/contact.html');
 });
 
 app.post('/submit-form', (req, res) => {
@@ -57,7 +57,7 @@ app.post('/submit-form', (req, res) => {
 
 app.get('/submitForm', (req, res) => {
     // Redirect to submitForm.html after successful form submission
-    res.sendFile(__dirname + '/public/submitForm.html');
+    res.sendFile(__dirname + '/submitForm.html');
 });
 
 app.listen(port, () => {
