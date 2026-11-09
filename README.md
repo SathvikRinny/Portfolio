@@ -1,6 +1,6 @@
 # Sathvik Raju Pothureddy: Portfolio
 
-**My personal portfolio website.** A hand-built static site with a printable resume. It needs no server or build step and is hosted free on GitHub Pages.
+**My freelance portfolio:** what I build, the work that proves it, and how to hire me. A hand-built static site with no server or build step, hosted free on GitHub Pages.
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
@@ -27,7 +27,7 @@
 **Stage & drawing set.** The site draws on the two worlds I work in:
 
 - **The stage.** My main project, GloryBoard, puts words on projector screens during church services. The hero is a working projector screen in the same style: short statements in large type with a small gold caption underneath, the way GloryBoard shows a verse reference. An operator console has **Previous**, **Next** and **Blank**, and the arrow keys and `B` work too. It plays through once on load, then the visitor is in control.
-- **The drawing set.** I trained as a mechanical engineer. Each project has a **title block** like the corner of an engineering drawing (type, built with, year, code), and the capstone is shown as a line drawing with dimension lines.
+- **The drawing set.** I trained as a mechanical engineer. Each project has a **title block** like the corner of an engineering drawing (type, built with, year, how to see it).
 
 | Token | Value | Used for |
 |---|---|---|
@@ -41,19 +41,20 @@
 
 The slideshow is the only motion that runs by itself. Everything else moves only when the visitor does something.
 
-![Projects section with the GloryBoard title block](docs/projects.png)
+![Services section](docs/services.png)
 
 ## Sections
 
+The page is written for clients: what I can build, proof that I can build it, and how to start.
+
 | Section | What it shows |
 |---|---|
-| **Hero** | Name, role and location, the projector screen with its console, and links to the projects and to email |
-| **Selected work** | GloryBoard (lead project), Liver Health Check, Techy Software website, log-in and sign-up pages, and the toroidal propeller study. Each has a screenshot or drawing, a summary and a title block. |
-| **About** | Portrait, background and a toolbox of skills |
-| **Experience and education** | Dated list of internships and the B.Tech |
-| **Certificates** | 7 certificates; select one to open the full-screen viewer |
-| **Contact** | Large email link with a **Copy email** button, plus LinkedIn, GitHub and the resume |
-| **Resume** (`resume.html`) | One-page resume in the same style, with a **Download PDF** button |
+| **Hero** | Name and location, the projector screen with its console, and **Get a quote** / **See my work** buttons |
+| **Selected work** | GloryBoard (lead project) and Liver Health Check, each with a screenshot, summary and title block |
+| **Services** | What I can build: websites, web apps and dashboards, desktop apps, AI and data tools |
+| **How we'll work together** | Four steps: talk, plan and quote, build with weekly previews, launch and support |
+| **About** | Portrait, a short introduction, and my tools and languages |
+| **Contact** | Large email link with a **Copy email** button, plus LinkedIn and GitHub |
 
 ## Features
 
@@ -62,15 +63,15 @@ Built mobile-first, and tested at 320, 390, 600, 768, 1024, 1280, 1366, 1440 and
 
 | Screen | Layout |
 |---|---|
-| Phones | Screen in 4:3.4 format, stacked projects, certificates 2 per row, Menu button |
-| 600px and up | 16:10 screen, dates in their own column, certificates 3 per row |
-| 900px and up | Inline navigation; 16:9 screen sized so the console stays above the fold; projects alternate sides; GloryBoard spans the full width; certificates 4 per row |
+| Phones | Screen in 4:3.4 format, everything stacked, Menu button |
+| 600px and up | 16:10 screen, services and steps 2 per row |
+| 900px and up | Inline navigation with a **Get a quote** button; 16:9 screen sized so the console stays above the fold; GloryBoard spans the full width; steps 4 per row |
 
 Text on the projector screen scales with the screen's width and height, so every slide fits at every size.
 
 ### Interaction
 - **Projector console:** Previous, Next and Blank buttons, arrow keys, `B` to blank, and swipe on touch screens. A **Live / Blank** light shows the screen's state.
-- **Image viewer:** opens project screenshots and certificates full screen, with Previous/Next, arrow keys and swipe; focus returns to where you were when it closes.
+- **Image viewer:** opens project screenshots full screen; focus returns to where you were when it closes.
 - **Copy email** button with a confirmation message.
 - **Current section** marked in the navigation as you scroll.
 
@@ -108,29 +109,27 @@ Then open http://localhost:8000.
 |---|---|
 | Slides on the projector screen | The `<figure class="slide">` blocks in `index.html` (also update “of 5” if you add or remove one) |
 | Projects | The `<article class="project">` blocks in `index.html`. The first one has the class `project-lead`. |
-| About text and skills | The `about` section in `index.html` |
-| Experience | The `<ol class="history">` list in `index.html` |
-| Resume | `resume.html` |
+| Services | The `<ul class="services">` list in `index.html` |
+| Process steps | The `<ol class="steps">` list in `index.html` (numbers are added automatically) |
+| About text and tools | The `about` section in `index.html` |
 | Project screenshots | `assets/img/projects/` (960×600 WebP) |
 | Colours and type sizes | The variables at the top of `assets/css/style.css` (dark mode is in the `prefers-color-scheme: dark` block below them) |
-| Email address | `index.html` (contact section and **Email me** button) and `resume.html` |
+| Email address | `index.html`: the contact section and the last slide |
 
-**Adding a certificate**
+**Adding a project**
 
-1. Add two images to `assets/img/certs/`: a large one (about 1400px wide) and a `-thumb` version (about 520px wide). WebP is recommended.
-2. Copy one of the `<li><button class="cert">` blocks in `index.html` and update `data-full`, the `<img src>`, the name and the issuer.
+1. Save a 960×600 screenshot as WebP in `assets/img/projects/`.
+2. Copy the Liver Health Check `<article class="project">` block in `index.html`, then change the image, text and title block. Projects after the first alternate sides automatically.
 
 ## Project structure
 
 ```
 index.html              Portfolio page
-resume.html             Printable resume
 assets/
   css/style.css         Styles and design tokens
   js/main.js            Projector console, menu, image viewer, copy email
   img/profile.webp      Portrait
   img/projects/         Project screenshots
-  img/certs/            Certificate images and thumbnails
 docs/                   Screenshots for this README
 ```
 

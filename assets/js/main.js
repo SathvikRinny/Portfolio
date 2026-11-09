@@ -124,7 +124,7 @@ if (!reduceMotion) {
     screen.addEventListener('pointerenter', stopAutoplay, { once: true });
 }
 
-/* ---------- Image viewer (certificates and project screenshots) ---------- */
+/* ---------- Image viewer (project screenshots) ---------- */
 const viewer = document.getElementById('viewer');
 const viewerImg = document.getElementById('viewer-img');
 const viewerTitle = document.getElementById('viewer-title');
@@ -156,13 +156,6 @@ function stepViewer(step) {
     galleryIndex = (galleryIndex + step + gallery.length) % gallery.length;
     renderViewer();
 }
-
-const certButtons = Array.from(document.querySelectorAll('.cert'));
-const certItems = certButtons.map(b => ({
-    src: b.dataset.full,
-    title: `${b.querySelector('.cert-name').textContent}, ${b.querySelector('.cert-issuer').textContent}`,
-}));
-certButtons.forEach((b, i) => b.addEventListener('click', () => openViewer(certItems, i, b)));
 
 document.querySelectorAll('[data-zoom]').forEach(link => {
     link.addEventListener('click', e => {
