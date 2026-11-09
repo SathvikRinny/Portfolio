@@ -1,272 +1,341 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <link href="https://fonts.googleapis.com/css?family=Jacques+Francois&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/main.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume | Sathvik Raju Pothureddy</title>
+    <meta name="description" content="Resume of Sathvik Raju Pothureddy, software developer.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
     <style>
-        body{
-  background-color: black;
-}
-a{
-  text-decoration: none;
-}
-.body2 {
-  border: #ffffff;
-  border-radius: 5px;
-  margin-top: -100px;
-  background-color: beige;
-font-family: 'Arial', sans-serif;
-line-height: 1.6;
-margin: 0;
-padding: 1%;
-}
+        :root {
+            --ink: #16161a;
+            --muted: #55545e;
+            --line: #e4e3ea;
+            --accent: #b7791f;
+        }
 
-header {
-background-color: #333;
-color: white;
-text-align: center;
-padding: 20px 0;
-}
+        * {
+            box-sizing: border-box;
+        }
 
-section {
-max-width: 800px;
-margin: 20px auto;
-padding: 20px;
-border: 1px solid #ccc;
-border-radius: 8px;
-}
+        body {
+            margin: 0;
+            padding: 24px 16px 64px;
+            background: #eeedf2;
+            color: var(--ink);
+            font: 15px/1.55 'Inter', system-ui, sans-serif;
+        }
 
-h1{
-color: white;
-}
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            max-width: 820px;
+            margin: 0 auto 16px;
+        }
 
-h2, h3 {
-color: #333;
-}
+        .toolbar a,
+        .toolbar button {
+            padding: 9px 18px;
+            border: 1px solid #cfcdd8;
+            border-radius: 999px;
+            background: #fff;
+            color: var(--ink);
+            font: inherit;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+        }
 
-h1 {
-margin-top: 0;
-}
+        .toolbar button {
+            border-color: var(--ink);
+            background: var(--ink);
+            color: #fff;
+        }
 
-h2 {
-border-bottom: 2px solid #333;
-padding-bottom: 5px;
-margin-bottom: 10px;
-}
+        .page {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: clamp(24px, 6vw, 56px);
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+        }
 
-h3 {
-margin-top: 20px;
-}
+        header {
+            padding-bottom: 18px;
+            border-bottom: 2px solid var(--ink);
+        }
 
-ul {
-list-style-type: none;
-padding: 0;
-}
+        h1 {
+            margin: 0;
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: clamp(1.8rem, 5vw, 2.4rem);
+        }
 
-li {
-margin-bottom: 5px;
-}
+        .title {
+            margin: 2px 0 10px;
+            font-weight: 600;
+            color: var(--accent);
+        }
 
-.contact-info {
-font-size: 18px;
-}
+        .contact {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 16px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
 
-.experience {
-margin-bottom: 20px;
-}
+        .contact a {
+            color: inherit;
+        }
 
-.experience h3 {
-margin-top: 0;
-}
+        h2 {
+            margin: 26px 0 10px;
+            font-size: 0.8rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
 
-.education {
-margin-top: 20px;
-}
+        .item {
+            margin-bottom: 14px;
+            break-inside: avoid;
+        }
 
-.languages {
-margin-top: 20px;
-}
+        .item-head {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 0 12px;
+        }
 
-.skills {
-margin-top: 20px;
-}
+        .item-head strong {
+            font-weight: 600;
+        }
 
-.certifications {
-margin-top: 20px;
-}
+        .date {
+            color: var(--muted);
+            font-size: 0.88rem;
+            white-space: nowrap;
+        }
 
+        .org {
+            color: var(--muted);
+        }
+
+        ul.points {
+            margin: 6px 0 0;
+            padding-left: 18px;
+        }
+
+        ul.points li {
+            margin-bottom: 3px;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        .skills {
+            display: grid;
+            grid-template-columns: 170px 1fr;
+            gap: 4px 12px;
+            margin: 0;
+        }
+
+        .skills dt {
+            font-weight: 600;
+        }
+
+        .skills dd {
+            margin: 0;
+        }
+
+        @media (max-width: 560px) {
+            .skills {
+                grid-template-columns: 1fr;
+            }
+
+            .skills dd {
+                margin-bottom: 8px;
+            }
+        }
+
+        @media print {
+            @page {
+                margin: 14mm;
+            }
+
+            body {
+                padding: 0;
+                background: #fff;
+                font-size: 10.5pt;
+            }
+
+            .toolbar {
+                display: none;
+            }
+
+            .page {
+                max-width: none;
+                padding: 0;
+                box-shadow: none;
+            }
+
+            a {
+                text-decoration: none;
+            }
+        }
     </style>
-    <title>Document</title>
 </head>
-<body>
-  <div style="margin-top: 10px; width: 100%; height: 100%; padding-left: 30px; padding-right: 100px; background: black; justify-content: space-between; align-items: center; display: inline-flex">
-    <div style="justify-content: flex-start; align-items: center; gap: 30px; display: flex">
-        <div style="width: 100px; height: 17px; color: white; font-size: 15px; font-family: Jacques Francois; font-weight: 400; line-height: 16px; word-wrap: break-word">
-          <a style="color: white;" href="index.html">Home</a>
-        </div>
-        <div style="width: 166px; height: 17px; color: white; font-size: 30px; font-family: Jacques Francois; font-weight: 400; line-height: 16px; word-wrap: break-word">
-            <a href="resume.html"style="color: white;">
-                My Resume
-            </a>
-        </div>
-        <div style="width: 106px; height: 17px; color: white; font-size: 15px; font-family: Jacques Francois; font-weight: 400; line-height: 16px; word-wrap: break-word">
-            <a href="certtificate.html"style="color: white;">
-                Achivementes
-            </a>
-        </div>
-        <div style="width: 71px; height: 17px; color: white; font-size: 15px; font-family: Jacques Francois; font-weight: 400; line-height: 16px; word-wrap: break-word">My Works</div>
-        <div style="width: 59px; height: 17px; color: white; font-size: 15px; font-family: Jacques Francois; font-weight: 400; line-height: 16px; word-wrap: break-word">
-            <a href="contact.html" style="color: white;">Contact</a>
-         </div>
-    </div>
-    <div style="margin-right: 50px; justify-content: flex-start; align-items: center; gap: 12px; display: flex">
-        <div style="width: 30px; height: 30px; position: relative">
-            <div style="width: 28.80px; height: 28.80px; left: 0.60px; top: 0.60px; position: absolute">
-                <a href="https://github.com/SathvikRinny">
-                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g clip-path="url(#clip0_158_88)">
-                        <path d="M15 0.600006C7.04698 0.600006 0.599976 7.04701 0.599976 15C0.599976 22.953 7.04698 29.4 15 29.4C22.953 29.4 29.4 22.953 29.4 15C29.4 7.04701 22.953 0.600006 15 0.600006ZM11.475 20.9685H8.55897V11.5845H11.475V20.9685ZM9.99897 10.4325C9.07797 10.4325 8.48248 9.78001 8.48248 8.97301C8.48248 8.14951 9.09597 7.51651 10.0365 7.51651C10.977 7.51651 11.553 8.14951 11.571 8.97301C11.571 9.78001 10.977 10.4325 9.99897 10.4325ZM22.125 20.9685H19.209V15.768C19.209 14.5575 18.786 13.7355 17.7315 13.7355C16.926 13.7355 16.4475 14.292 16.236 14.8275C16.158 15.018 16.1385 15.288 16.1385 15.5565V20.967H13.221V14.577C13.221 13.4055 13.1835 12.426 13.1445 11.583H15.678L15.8115 12.8865H15.87C16.254 12.2745 17.1945 11.3715 18.768 11.3715C20.6865 11.3715 22.125 12.657 22.125 15.42V20.9685Z" fill="white"/>
-                        </g>
-                        <defs>
-                        <clipPath id="clip0_158_88">
-                        <rect width="30" height="30" fill="white"/>
-                        </clipPath>
-                        </defs>
-                        </svg>
-                </a>
-            </div>
-        </div>
-        <div style="width: 35px; height: 35px; position: relative">
-            <div style="width: 29.17px; height: 28.46px; left: 2.92px; top: 0.60px; position: absolute;">
-                <a href="https://www.linkedin.com/in/sathvik-raju/">
-                    <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M17.5 2.91666C15.5849 2.91666 13.6886 3.29387 11.9192 4.02675C10.1499 4.75963 8.54223 5.83383 7.18805 7.18802C4.45314 9.92292 2.91669 13.6322 2.91669 17.5C2.91669 23.9458 7.1021 29.4146 12.8917 31.3542C13.6209 31.4708 13.8542 31.0187 13.8542 30.625V28.1604C9.8146 29.0354 8.95419 26.2062 8.95419 26.2062C8.28335 24.5146 7.33544 24.0625 7.33544 24.0625C6.00835 23.1583 7.43752 23.1875 7.43752 23.1875C8.89585 23.2896 9.66877 24.6896 9.66877 24.6896C10.9375 26.9062 13.0813 26.25 13.9125 25.9C14.0438 24.9521 14.4229 24.3104 14.8313 23.9458C11.5938 23.5812 8.19585 22.3271 8.19585 16.7708C8.19585 15.1521 8.75002 13.8542 9.69794 12.8187C9.5521 12.4542 9.04169 10.9375 9.84377 8.96874C9.84377 8.96874 11.0688 8.57499 13.8542 10.4562C15.0063 10.1354 16.2604 9.97499 17.5 9.97499C18.7396 9.97499 19.9938 10.1354 21.1459 10.4562C23.9313 8.57499 25.1563 8.96874 25.1563 8.96874C25.9584 10.9375 25.4479 12.4542 25.3021 12.8187C26.25 13.8542 26.8042 15.1521 26.8042 16.7708C26.8042 22.3417 23.3917 23.5667 20.1396 23.9312C20.6646 24.3833 21.1459 25.2729 21.1459 26.6292V30.625C21.1459 31.0187 21.3792 31.4854 22.1229 31.3542C27.9125 29.4 32.0834 23.9458 32.0834 17.5C32.0834 15.5849 31.7061 13.6885 30.9733 11.9192C30.2404 10.1499 29.1662 8.5422 27.812 7.18802C26.4578 5.83383 24.8502 4.75963 23.0808 4.02675C21.3115 3.29387 19.4151 2.91666 17.5 2.91666Z" fill="white"/>
-                        </svg>
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="body2" style="width: 70%; margin-top: 50px; margin-left: 15%; ; align-items: center;">
-    <header style="width: 99%; margin-left: 0.5%; top: 300px;">
-        <h1>Sathvik Raju Pothureddy</h1>
-        <p class="contact-info">sathvikrinny@gmail.com | 9177931562 | Gudivada, India 521301</p>
-      </header>
-    
-      <section>
-    
-        <h2>Professional Summary</h2>
-        <p>
-          Mechanical engineering graduate with a keen aptitude for software development. Adept at leveraging engineering principles to create efficient and reliable software solutions, offering a unique blend of technical expertise in both domains. Ready to drive innovation and solve complex challenges in the software engineering field.
-        </p>
-    
-        <h2>Skills</h2>
-        <ul class="skills">
-          <li>Programming Languages: Python, Basic C, Basic Java Script, SQL</li>
-          <li>Web Development: HTML, CSS, Figma</li>
-          <li>Software: SolidWorks, AutoCAD, MS Office</li>
-          <li>Problem Solving: Strong analytical and problem-solving skills</li>
-          <li>Project Management: Project managing skills, Adaptable to learn new skills</li>
-          <li>Communication: Strong communication and presentation skills</li>
-        </ul>
-    
-        <h2>Professional Experience</h2>
-        
-        <div class="experience">
-          <h3>Web Developer Intern - TechArion Pvt.Ltd, Remote (09/2023 - Current)</h3>
-          <ul>
-            <li>Collaborated with a dynamic team of developers to contribute to the successful completion of 4 web development projects.</li>
-            <li>Utilized Figma extensively for design prototyping and collaborated with designers to ensure seamless integration of UI/UX elements into the final products.</li>
-            <li>Gained practical experience in front-end technologies, including HTML, CSS, and JavaScript, to implement responsive and user-friendly interfaces.</li>
-            <li>Actively participated in team meetings, providing valuable insights and ideas for improving project workflows and efficiency.</li>
-            <li>Demonstrated a strong ability to adapt and learn quickly, contributing to the timely delivery of high-quality web solutions.</li>
-            <li>Collaborated with cross-functional teams, including designers and project managers, to ensure the alignment of development tasks with project goals and client requirements.</li>
-          </ul>
-        </div>
-    
-        <div class="experience">
-          <h3>Graduation Apperenties Trainee - Timken Research & Development, Chennai (02/2023 - 03/2023)</h3>
-          <ul>
-            <li>Completed an Apprentice Training program during graduation, gaining hands-on experience operating CNC machines and contributing to assembly unit operations.</li>
-          </ul>
-        </div>
-    
-        <h2>Education</h2>
-        
-        <div class="education">
-          <p><strong>Bachelor of Technology, Mechanical Engineering</strong><br>
-          Gudlavalleru Engineering College, Gudlavalleru (04/2019 - 03/2023)<br>
-          GPA/CGPA: 7.13</p>
-    
-          <p><strong>Board of Intermediate Education</strong><br>
-          Sri Gayatri College, Vijayawada (03/2017 - 03/2019)<br>
-          [Maths Physics Chemistry]</p>
-    
-          <p><strong>Board of Secondary Education (Tenth)</strong><br>
-          Viswabharati English Medium High School, Gudivada (05/2015 - 05/2017)</p>
-        </div>
-    
-        <h2>Projects</h2>
-        <ul>
-          <li><strong>Capstone Project:</strong> [Estimation of Thrust coefficient of a Quadcopter & Toroidal Propeller in Ansys] - Coordinated team and designed.</li>
-          <li><strong>Mini Project:</strong> [Effects of Piston bowl shape using converge software] - Coordinated team and designed.</li>
-          <li><strong>Research Project in Internship:</strong> [Liver Patient Data Analysis using IBM Machine]</li>
-        </ul>
-    
-        <h2>Certifications</h2>
-        <ul class="certifications">
-          <li>Certification in 3D designing Workshop</li>
-          <li>Certification Consultant virtual experience program</li>
-          <li>Certification in Python</li>
-        </ul>
-    
-        <h2>Languages</h2>
-        <ul class="languages">
-          <li><strong>English:</strong> Advanced (C1)</li>
-          <li><strong>Telugu:</strong> Bilingual or Proficient (C2)</li>
-          <li><strong>Hindi:</strong> Intermediate (B1)</li>
-        </ul>
-    
-      </section>
-</div>
-<div style=" margin-top: 100px; height: 53px; flex-direction: column; justify-content: center; align-items: flex-start; gap: 17px; display: flex">
-    <div style="margin-left: 7%; width: 1275.87px; height: 0px; border: 1px white solid"></div>
-    <div style=" align-self: stretch; height: 36px; justify-content: center; align-items: flex-start; gap: 1007px; display: inline-flex">
-        <div style="  align-self: stretch; padding: 10px; justify-content: center; align-items: center; gap: 10px; display: inline-flex">
-            <div style=" color: white; font-size: 25px; font-family: Jacques Francois; font-weight: 400; line-height: 16px; word-wrap: break-word">Sathvik_Rinny</div>
-        </div>
-        <div style="align-self: stretch; justify-content: flex-start; align-items: center; gap: 12px; display: inline-flex">
-            <div style="width: 30px; height: 30px; position: relative">
-                <div style="width: 28.80px; height: 28.80px; left: 0.60px; top: 0.60px; position: absolute">
-                    <a href="">
-                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g clip-path="url(#clip0_158_88)">
-                            <path d="M15 0.600006C7.04698 0.600006 0.599976 7.04701 0.599976 15C0.599976 22.953 7.04698 29.4 15 29.4C22.953 29.4 29.4 22.953 29.4 15C29.4 7.04701 22.953 0.600006 15 0.600006ZM11.475 20.9685H8.55897V11.5845H11.475V20.9685ZM9.99897 10.4325C9.07797 10.4325 8.48248 9.78001 8.48248 8.97301C8.48248 8.14951 9.09597 7.51651 10.0365 7.51651C10.977 7.51651 11.553 8.14951 11.571 8.97301C11.571 9.78001 10.977 10.4325 9.99897 10.4325ZM22.125 20.9685H19.209V15.768C19.209 14.5575 18.786 13.7355 17.7315 13.7355C16.926 13.7355 16.4475 14.292 16.236 14.8275C16.158 15.018 16.1385 15.288 16.1385 15.5565V20.967H13.221V14.577C13.221 13.4055 13.1835 12.426 13.1445 11.583H15.678L15.8115 12.8865H15.87C16.254 12.2745 17.1945 11.3715 18.768 11.3715C20.6865 11.3715 22.125 12.657 22.125 15.42V20.9685Z" fill="white"/>
-                            </g>
-                            <defs>
-                            <clipPath id="clip0_158_88">
-                            <rect width="30" height="30" fill="white"/>
-                            </clipPath>
-                            </defs>
-                            </svg>
-                            
-                    </a>
-                </div>
-            </div>
-            <div style="width: 35px; height: 35px; position: relative">
-                <div style="width: 29.17px; height: 28.46px; left: 2.92px; top: 2.92px; position: absolute">
-                 <a href="">
-                    <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M17.5 2.91666C15.5849 2.91666 13.6886 3.29387 11.9192 4.02675C10.1499 4.75963 8.54223 5.83383 7.18805 7.18802C4.45314 9.92292 2.91669 13.6322 2.91669 17.5C2.91669 23.9458 7.1021 29.4146 12.8917 31.3542C13.6209 31.4708 13.8542 31.0187 13.8542 30.625V28.1604C9.8146 29.0354 8.95419 26.2062 8.95419 26.2062C8.28335 24.5146 7.33544 24.0625 7.33544 24.0625C6.00835 23.1583 7.43752 23.1875 7.43752 23.1875C8.89585 23.2896 9.66877 24.6896 9.66877 24.6896C10.9375 26.9062 13.0813 26.25 13.9125 25.9C14.0438 24.9521 14.4229 24.3104 14.8313 23.9458C11.5938 23.5812 8.19585 22.3271 8.19585 16.7708C8.19585 15.1521 8.75002 13.8542 9.69794 12.8187C9.5521 12.4542 9.04169 10.9375 9.84377 8.96874C9.84377 8.96874 11.0688 8.57499 13.8542 10.4562C15.0063 10.1354 16.2604 9.97499 17.5 9.97499C18.7396 9.97499 19.9938 10.1354 21.1459 10.4562C23.9313 8.57499 25.1563 8.96874 25.1563 8.96874C25.9584 10.9375 25.4479 12.4542 25.3021 12.8187C26.25 13.8542 26.8042 15.1521 26.8042 16.7708C26.8042 22.3417 23.3917 23.5667 20.1396 23.9312C20.6646 24.3833 21.1459 25.2729 21.1459 26.6292V30.625C21.1459 31.0187 21.3792 31.4854 22.1229 31.3542C27.9125 29.4 32.0834 23.9458 32.0834 17.5C32.0834 15.5849 31.7061 13.6885 30.9733 11.9192C30.2404 10.1499 29.1662 8.5422 27.812 7.18802C26.4578 5.83383 24.8502 4.75963 23.0808 4.02675C21.3115 3.29387 19.4151 2.91666 17.5 2.91666Z" fill="white"/>
-                        </svg>
-                        
-                 </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
-    
+<body>
+    <nav class="toolbar" aria-label="Resume actions">
+        <a href="index.html">← Back to portfolio</a>
+        <button type="button" onclick="window.print()">Download PDF</button>
+    </nav>
+
+    <main class="page">
+        <header>
+            <h1>Sathvik Raju Pothureddy</h1>
+            <p class="title">Software Developer</p>
+            <ul class="contact">
+                <li><a href="mailto:sathvikrinny@gmail.com">sathvikrinny@gmail.com</a></li>
+                <li><a href="tel:+919177931562">+91 91779 31562</a></li>
+                <li>Gudivada, Andhra Pradesh, India</li>
+                <li><a href="https://www.linkedin.com/in/sathvik-raju/">linkedin.com/in/sathvik-raju</a></li>
+                <li><a href="https://github.com/SathvikRinny">github.com/SathvikRinny</a></li>
+            </ul>
+        </header>
+
+        <section>
+            <h2>Summary</h2>
+            <p>Mechanical engineering graduate turned software developer. I build web apps, desktop apps and
+                machine-learning tools end to end, from Figma prototypes to tested, deployed code, and bring an
+                engineer’s focus on reliability and measurable results.</p>
+        </section>
+
+        <section>
+            <h2>Skills</h2>
+            <dl class="skills">
+                <dt>Languages</dt>
+                <dd>JavaScript, Python, SQL, HTML, CSS, basic C</dd>
+                <dt>Frameworks &amp; tools</dt>
+                <dd>Node.js, Express, Electron, Flask, scikit-learn, pandas, Git, GitHub Actions</dd>
+                <dt>Design</dt>
+                <dd>Figma, UI/UX prototyping, responsive design</dd>
+                <dt>Engineering</dt>
+                <dd>SolidWorks, AutoCAD, Ansys</dd>
+            </dl>
+        </section>
+
+        <section>
+            <h2>Projects</h2>
+            <div class="item">
+                <div class="item-head"><strong>GloryBoard: church presentation app</strong><span
+                        class="date">Electron, JavaScript</span></div>
+                <ul class="points">
+                    <li>Desktop app that sends lyrics, Bible verses (English and Telugu), images, videos and PDFs to
+                        multiple projector screens from one control window, with a stage monitor view.</li>
+                    <li>Automated Windows and macOS installer builds with GitHub Actions.</li>
+                </ul>
+            </div>
+            <div class="item">
+                <div class="item-head"><strong>Liver Health Check: ML risk prediction</strong><span
+                        class="date">Python, Flask, scikit-learn</span></div>
+                <ul class="points">
+                    <li>Web app estimating liver disease risk from ten blood test values; flags out-of-range
+                        results.</li>
+                    <li>Compared three models with cross-validation; random forest reached ROC AUC 0.78.</li>
+                </ul>
+            </div>
+            <div class="item">
+                <div class="item-head"><strong>Techy Software: business website</strong><span class="date">Node.js,
+                        Express</span></div>
+                <ul class="points">
+                    <li>Responsive site with validated, rate-limited contact and feedback APIs.</li>
+                </ul>
+            </div>
+            <div class="item">
+                <div class="item-head"><strong>Quadcopter &amp; toroidal propeller thrust (capstone)</strong><span
+                        class="date">Ansys</span></div>
+                <ul class="points">
+                    <li>Estimated thrust coefficients of quadcopter and toroidal propellers; led the team and
+                        design.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Experience</h2>
+            <div class="item">
+                <div class="item-head"><strong>UI/UX &amp; Web Developer Intern</strong><span class="date">Aug 2023 –
+                        Oct 2023</span></div>
+                <p class="org">Tech Arion Pvt. Ltd., Hyderabad (remote)</p>
+                <ul class="points">
+                    <li>Contributed to 4 web development projects with a team of developers and designers.</li>
+                    <li>Designed prototypes in Figma and built responsive interfaces in HTML, CSS and JavaScript.
+                    </li>
+                </ul>
+            </div>
+            <div class="item">
+                <div class="item-head"><strong>Graduate Apprentice Trainee</strong><span class="date">Feb 2023 – Mar
+                        2023</span></div>
+                <p class="org">Timken Research &amp; Development, Chennai</p>
+                <ul class="points">
+                    <li>Operated CNC machines and supported assembly unit operations.</li>
+                </ul>
+            </div>
+            <div class="item">
+                <div class="item-head"><strong>Machine Learning &amp; Deep Learning Virtual Intern</strong><span
+                        class="date">Feb 2022 – Apr 2022</span></div>
+                <p class="org">SmartBridge</p>
+                <ul class="points">
+                    <li>Built and deployed a liver patient classification model on IBM Cloud; skill index 9/10.
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Education</h2>
+            <div class="item">
+                <div class="item-head"><strong>B.Tech, Mechanical Engineering</strong><span class="date">2019 –
+                        2023</span></div>
+                <p class="org">Gudlavalleru Engineering College · CGPA 7.13</p>
+            </div>
+            <div class="item">
+                <div class="item-head"><strong>Intermediate (MPC)</strong><span class="date">2017 – 2019</span></div>
+                <p class="org">Sri Gayatri College, Vijayawada</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Certifications &amp; awards</h2>
+            <ul class="points">
+                <li>The Complete Python Bootcamp: Udemy</li>
+                <li>Python (Basic): HackerRank, 2022</li>
+                <li>Consultant Virtual Experience Program: Accenture</li>
+                <li>3D Printing Workshop: RoboGEN, 2022</li>
+                <li>3rd Prize, CAD Mania (modelling and animation): Gudlavalleru Engineering College</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Languages</h2>
+            <p>Telugu (native) · English (advanced, C1) · Hindi (intermediate, B1)</p>
+        </section>
+    </main>
 </body>
+
 </html>
