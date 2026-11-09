@@ -7,7 +7,9 @@
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
 ![GitHub Pages](https://img.shields.io/badge/hosted%20on-GitHub%20Pages-222?logo=github)
 
-![Portfolio home](docs/screenshot.png)
+| Desktop | Phone |
+|---|---|
+| ![Portfolio on desktop](docs/screenshot.png) | ![Portfolio on a phone](docs/mobile.png) |
 
 ## Contents
 
@@ -23,27 +25,42 @@
 
 | Section | What it shows |
 |---|---|
-| **Hero** | Name, role, short intro, and links to GitHub, LinkedIn and email |
-| **About** | Background and a skills list |
-| **Projects** | GloryBoard (featured), Liver Health Check, Techy Software website, Login & Sign-Up pages, and my engineering capstone |
+| **Hero** | Photo, name, role, short intro, "Open to work" badge, profile links, and a highlights bar (projects, internships, certificates) |
+| **About** | Background and skills grouped by type |
+| **Projects** | Cards with real screenshots: GloryBoard (featured), Liver Health Check, Techy Software website, Login & Sign-Up pages, and my engineering capstone |
 | **Experience** | Timeline of internships and education |
-| **Certificates** | Gallery of 7 certificates; click any one to view it full size |
+| **Certificates** | Gallery of 7 certificates; tap any one to open a full-screen viewer |
 | **Contact** | Email and profile links, plus a message form |
 | **Resume** (`resume.html`) | Clean one-page resume with a **Download PDF** button |
 
-![Projects section](docs/projects.png)
-
 ## Features
 
-- Responsive on phones, tablets and desktops, with a hamburger menu on small screens
-- Highlights the current section in the menu as you scroll
-- Sections fade in on scroll; animations are off if the visitor prefers reduced motion
-- Certificate viewer built on the native `<dialog>` element (closes with Esc or a click outside)
-- **Contact form without a server:** it checks the fields, then opens the visitor's email app with the subject and message filled in
+### Responsive on every screen
+The layout is mobile-first and adapts at each size:
+
+| Screen | Layout |
+|---|---|
+| Phones (under 600px) | Centred hero, single-column projects, 2-column certificate grid, full-screen menu |
+| Large phones and small tablets (600px+) | 2-column projects, 3-column certificates |
+| Tablets (760px+) | Hero and About side by side, timeline with dates in their own column |
+| Laptops (900px+) | Inline navigation, full-height hero, featured project shown side by side, 4-column certificates |
+| Desktops (1200px+) | Wider spacing and timeline |
+
+It also respects notches and rounded corners (`safe-area-inset`), keeps every tap target at least 44px, and uses 16px form text so iPhones don't zoom in.
+
+### Everything else
+- **Light and dark themes:** follows the device setting, with a toggle in the header that remembers your choice
+- **Full-screen mobile menu** that locks page scrolling and closes with Esc or a tap on a link
+- **Active section** highlighted in the menu as you scroll
+- **Certificate viewer:** previous/next buttons, arrow keys and swipe gestures
+- **Back-to-top button** after you scroll past the first screen
+- **Contact form without a server:** it checks the fields, then opens the visitor's email app with the message filled in
 - **Printable resume:** `resume.html` has print styles, so **Download PDF** (or Ctrl/Cmd + P) gives a clean PDF
-- Accessible: skip link, labelled fields, visible focus outlines, alt text
-- Fast: every image is WebP, about 0.7 MB in total
-- SEO and social sharing tags (description, Open Graph)
+- **Accessible:** skip link, labelled fields, visible focus outlines, alt text, reduced-motion support
+- **Fast:** WebP images, lazy-loaded below the fold
+- **SEO and sharing tags** (description, Open Graph, theme colour)
+
+![Projects section](docs/projects.png)
 
 ## Running locally
 
@@ -72,7 +89,8 @@ Then open http://localhost:8000.
 | Projects | The `<article class="project">` blocks in `index.html` |
 | Experience | The `<ol class="timeline">` list in `index.html` |
 | Resume | `resume.html` |
-| Colours and fonts | The variables at the top of `assets/css/style.css` |
+| Project screenshots | `assets/img/projects/` (960×600 WebP) |
+| Colours and fonts | The variables at the top of `assets/css/style.css` (dark theme in `:root`, light theme in `[data-theme="light"]`) |
 | Contact email | `index.html`, `resume.html`, and `EMAIL` at the top of `assets/js/main.js` |
 
 **Adding a certificate**
@@ -87,8 +105,9 @@ index.html              Portfolio page
 resume.html             Printable resume
 assets/
   css/style.css         Styles
-  js/main.js            Menu, scroll effects, certificate viewer, contact form
+  js/main.js            Theme, menu, scroll effects, certificate viewer, contact form
   img/profile.webp      Profile photo
+  img/projects/         Project screenshots
   img/certs/            Certificate images and thumbnails
 docs/                   Screenshots for this README
 ```
