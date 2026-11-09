@@ -1,125 +1,476 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <link href="https://fonts.googleapis.com/css?family=Jacques+Francois&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/main.css">
-    <style>
-        body{
-            background-color: rgb(0, 0, 0);
-        }
-        a{
-            text-decoration: none;
-        }
-    </style>
-    <title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Sathvik Raju Pothureddy, software developer</title>
+    <meta name="description"
+        content="Sathvik Raju Pothureddy is a software developer and mechanical engineer. He builds desktop apps, web apps and machine-learning tools, including GloryBoard, presentation software used in church services.">
+    <meta property="og:title" content="Sathvik Raju Pothureddy, software developer">
+    <meta property="og:description"
+        content="Desktop apps, web apps and machine-learning tools, from a mechanical engineer turned developer.">
+    <meta property="og:image" content="assets/img/projects/gloryboard.webp">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#EEF0F3" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0F1426" media="(prefers-color-scheme: dark)">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%230E1630'/><rect x='10' y='14' width='44' height='28' rx='3' fill='none' stroke='%23FFC857' stroke-width='4'/><path d='M24 52h16' stroke='%23FFC857' stroke-width='4' stroke-linecap='round'/></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
+
 <body>
-    <div style="margin-top: 10px; margin-right: auto;margin-left: auto; width: 100%; height: 100%; background: black; justify-content: space-between; align-items: center; display: inline-flex">
-        <div style="justify-content: flex-start; align-items: center; gap: 30px; display: flex">
-            <div style="width: 100px; height: 17px; color: white; font-size: 30px; font-family: Jacques Francois; font-weight: 400; line-height: 16px; word-wrap: break-word">Home</div>
-            <div style="width: 86px; height: 17px; color: white; font-size: 15px; font-family: Jacques Francois; font-weight: 400; line-height: 16px; word-wrap: break-word">
-                <a href="resume.html"style="color: white;">
-                    My Resume
-                </a>
-            </div>
-            <div style="width: 106px; height: 17px; color: white; font-size: 15px; font-family: Jacques Francois; font-weight: 400; line-height: 16px; word-wrap: break-word">
-                <a href="certtificate.html"style="color: white;">
-                    Achivementes
-                </a>
-            </div>
-            <div style="width: 71px; height: 17px; color: white; font-size: 15px; font-family: Jacques Francois; font-weight: 400; line-height: 16px; word-wrap: break-word">My Works</div>
-            <div style="width: 59px; height: 17px; color: white; font-size: 15px; font-family: Jacques Francois; font-weight: 400; line-height: 16px; word-wrap: break-word">
-                <a href="contact.html" style="color: white;">Contact</a>
-             </div>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+        <div class="wrap header-inner">
+            <a class="wordmark" href="#top" aria-label="Sathvik, back to top">
+                <svg viewBox="0 0 28 24" width="28" height="24" aria-hidden="true">
+                    <rect x="1.5" y="1.5" width="25" height="15" rx="2.5" fill="var(--screen)" stroke="var(--ink)"
+                        stroke-width="1.5" />
+                    <path d="M7 7h14M9 11h10" stroke="var(--lamp)" stroke-width="2" stroke-linecap="round" />
+                    <path d="M10 22h8M14 17v5" stroke="var(--ink)" stroke-width="1.5" stroke-linecap="round" />
+                </svg>
+                <span>Sathvik</span>
+            </a>
+            <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+            <nav class="site-nav" id="site-nav" aria-label="Main">
+                <a href="#work">Work</a>
+                <a href="#about">About</a>
+                <a href="#experience">Experience</a>
+                <a href="#certificates">Certificates</a>
+                <a href="#contact">Contact</a>
+                <a class="nav-resume" href="resume.html">Resume</a>
+            </nav>
         </div>
-        <div style="margin-right: 10px; justify-content: flex-start; align-items: center; gap: 12px; display: flex">
-            <div style="width: 30px; height: 30px; position: relative">
-                <div style="width: 28.80px; height: 28.80px; left: 0.60px; top: 0.60px; position: absolute">
-                    <a href="https://github.com/SathvikRinny">
-                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g clip-path="url(#clip0_158_88)">
-                            <path d="M15 0.600006C7.04698 0.600006 0.599976 7.04701 0.599976 15C0.599976 22.953 7.04698 29.4 15 29.4C22.953 29.4 29.4 22.953 29.4 15C29.4 7.04701 22.953 0.600006 15 0.600006ZM11.475 20.9685H8.55897V11.5845H11.475V20.9685ZM9.99897 10.4325C9.07797 10.4325 8.48248 9.78001 8.48248 8.97301C8.48248 8.14951 9.09597 7.51651 10.0365 7.51651C10.977 7.51651 11.553 8.14951 11.571 8.97301C11.571 9.78001 10.977 10.4325 9.99897 10.4325ZM22.125 20.9685H19.209V15.768C19.209 14.5575 18.786 13.7355 17.7315 13.7355C16.926 13.7355 16.4475 14.292 16.236 14.8275C16.158 15.018 16.1385 15.288 16.1385 15.5565V20.967H13.221V14.577C13.221 13.4055 13.1835 12.426 13.1445 11.583H15.678L15.8115 12.8865H15.87C16.254 12.2745 17.1945 11.3715 18.768 11.3715C20.6865 11.3715 22.125 12.657 22.125 15.42V20.9685Z" fill="white"/>
-                            </g>
+    </header>
+
+    <main id="main">
+        <!-- Hero: a projector screen with an operator console, like GloryBoard -->
+        <section class="hero" id="top" aria-labelledby="hero-title">
+            <div class="wrap">
+                <div class="hero-intro">
+                    <h1 id="hero-title">Sathvik Raju Pothureddy</h1>
+                    <p class="hero-role">Software developer. Mechanical engineer by degree. Based in Gudivada,
+                        India.</p>
+                </div>
+
+                <div class="stage">
+                    <div class="screen" id="screen" aria-roledescription="slideshow"
+                        aria-label="About Sathvik, in five slides">
+                        <div class="slides" aria-live="polite">
+                            <figure class="slide is-live" data-index="0">
+                                <blockquote>Hi, I’m Sathvik. I write software people use in front of a room.
+                                </blockquote>
+                                <figcaption>Software developer, since 2023</figcaption>
+                            </figure>
+                            <figure class="slide" data-index="1" hidden>
+                                <blockquote>Some of it puts song lyrics and Bible verses on five screens at once.
+                                </blockquote>
+                                <figcaption>GloryBoard, desktop app</figcaption>
+                            </figure>
+                            <figure class="slide" data-index="2" hidden>
+                                <blockquote>Some of it reads a blood test and estimates liver-disease risk.
+                                </blockquote>
+                                <figcaption>Liver Health Check, machine learning</figcaption>
+                            </figure>
+                            <figure class="slide" data-index="3" hidden>
+                                <blockquote>I trained to design propellers. I stayed for the code.</blockquote>
+                                <figcaption>B.Tech, Mechanical Engineering, 2023</figcaption>
+                            </figure>
+                            <figure class="slide" data-index="4" hidden>
+                                <blockquote>Scroll down to see the work.</blockquote>
+                                <figcaption>Five projects, three internships</figcaption>
+                            </figure>
+                        </div>
+                        <p class="screen-blank" hidden>Screen blanked. Press Blank again to show it.</p>
+                    </div>
+
+                    <div class="console" role="group" aria-label="Slide controls">
+                        <div class="console-buttons">
+                            <button type="button" class="key" data-action="prev" aria-keyshortcuts="ArrowLeft">
+                                <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true">
+                                    <path d="M12.5 4.5 7 10l5.5 5.5" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                <span>Previous</span>
+                            </button>
+                            <button type="button" class="key key-primary" data-action="next"
+                                aria-keyshortcuts="ArrowRight">
+                                <span>Next</span>
+                                <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true">
+                                    <path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                            <button type="button" class="key" data-action="blank" aria-pressed="false"
+                                aria-keyshortcuts="B">Blank</button>
+                        </div>
+                        <div class="console-status">
+                            <span class="on-air"><span class="lamp" aria-hidden="true"></span><span
+                                    class="on-air-text">Live</span></span>
+                            <span class="counter"><span id="slide-num">1</span> of 5</span>
+                        </div>
+                    </div>
+                    <p class="console-hint">Use the arrow keys to change slides.</p>
+                </div>
+
+                <div class="hero-actions">
+                    <a class="button button-solid" href="#work">See my projects</a>
+                    <a class="button button-line" href="mailto:sathvikrinny@gmail.com">Email me</a>
+                    <p class="availability">Open to software developer roles and freelance work.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Work -->
+        <section class="section" id="work" aria-labelledby="work-title">
+            <div class="wrap">
+                <header class="section-header">
+                    <h2 id="work-title">Selected work</h2>
+                    <p>Five projects, from a desktop app used every week to an engineering study in Ansys.</p>
+                </header>
+
+                <article class="project project-lead">
+                    <a class="project-image" href="assets/img/projects/gloryboard.webp" data-zoom
+                        aria-label="Enlarge GloryBoard screenshot">
+                        <img src="assets/img/projects/gloryboard.webp"
+                            alt="GloryBoard control window. Song slides on the left, the live slide highlighted, and text style controls on the right."
+                            width="960" height="600" loading="lazy">
+                    </a>
+                    <div class="project-text">
+                        <h3>GloryBoard</h3>
+                        <p class="project-summary">Presentation software for church services. One operator sends
+                            lyrics, Bible verses, images, video and a live camera to every screen in the room, with
+                            a separate view for the people on stage.</p>
+                        <ul class="project-points">
+                            <li>English and Telugu Bibles built in, so it works without internet</li>
+                            <li>Song library with search and PDF import</li>
+                            <li>Windows and macOS installers built automatically on every push</li>
+                        </ul>
+                        <table class="title-block">
+                            <caption class="visually-hidden">GloryBoard details</caption>
+                            <tr><th scope="row">Type</th><td>Desktop app</td></tr>
+                            <tr><th scope="row">Built with</th><td>Electron, JavaScript, Python</td></tr>
+                            <tr><th scope="row">Year</th><td>2025–2026</td></tr>
+                            <tr><th scope="row">Code</th><td>Private. Demo on request.</td></tr>
+                        </table>
+                    </div>
+                </article>
+
+                <article class="project">
+                    <a class="project-image" href="assets/img/projects/liver.webp" data-zoom
+                        aria-label="Enlarge Liver Health Check screenshot">
+                        <img src="assets/img/projects/liver.webp"
+                            alt="Liver Health Check home page with a heading and a Start the check button."
+                            width="960" height="600" loading="lazy">
+                    </a>
+                    <div class="project-text">
+                        <h3>Liver Health Check</h3>
+                        <p class="project-summary">Enter ten values from a liver function test and get a risk
+                            percentage, plus a list of results outside the normal range.</p>
+                        <ul class="project-points">
+                            <li>Random forest chosen from three models by cross-validation (ROC AUC 0.78)</li>
+                            <li>JSON API and automated tests</li>
+                        </ul>
+                        <table class="title-block">
+                            <caption class="visually-hidden">Liver Health Check details</caption>
+                            <tr><th scope="row">Type</th><td>Machine-learning web app</td></tr>
+                            <tr><th scope="row">Built with</th><td>Python, Flask, scikit-learn</td></tr>
+                            <tr><th scope="row">Year</th><td>2022, rebuilt 2026</td></tr>
+                            <tr><th scope="row">Code</th><td><a
+                                        href="https://github.com/SathvikRinny/Liver_Paitent_Analysis_NexsuProject_3s">View
+                                        on GitHub</a></td></tr>
+                        </table>
+                    </div>
+                </article>
+
+                <article class="project">
+                    <a class="project-image" href="assets/img/projects/techy.webp" data-zoom
+                        aria-label="Enlarge Techy Software website screenshot">
+                        <img src="assets/img/projects/techy.webp"
+                            alt="Techy Software website hero with a purple background and a book cover illustration."
+                            width="960" height="600" loading="lazy">
+                    </a>
+                    <div class="project-text">
+                        <h3>Techy Software website</h3>
+                        <p class="project-summary">A business website with contact and star-rating feedback forms.
+                            Submissions go to a small Express API that validates and rate-limits them.</p>
+                        <table class="title-block">
+                            <caption class="visually-hidden">Techy Software website details</caption>
+                            <tr><th scope="row">Type</th><td>Full-stack website</td></tr>
+                            <tr><th scope="row">Built with</th><td>Node.js, Express, JavaScript</td></tr>
+                            <tr><th scope="row">Year</th><td>2024</td></tr>
+                            <tr><th scope="row">Code</th><td><a
+                                        href="https://github.com/SathvikRinny/NexusProject2">View on
+                                        GitHub</a></td></tr>
+                        </table>
+                    </div>
+                </article>
+
+                <article class="project">
+                    <a class="project-image" href="assets/img/projects/login.webp" data-zoom
+                        aria-label="Enlarge sign-up page screenshot">
+                        <img src="assets/img/projects/login.webp"
+                            alt="Sign-up form on a frosted glass card with a password strength bar."
+                            width="960" height="600" loading="lazy">
+                    </a>
+                    <div class="project-text">
+                        <h3>Log-in and sign-up pages</h3>
+                        <p class="project-summary">Account screens with live validation, a password-strength meter
+                            and show-password buttons. Built without a framework.</p>
+                        <table class="title-block">
+                            <caption class="visually-hidden">Log-in and sign-up pages details</caption>
+                            <tr><th scope="row">Type</th><td>Front-end</td></tr>
+                            <tr><th scope="row">Built with</th><td>HTML, CSS, JavaScript</td></tr>
+                            <tr><th scope="row">Year</th><td>2024</td></tr>
+                            <tr><th scope="row">Code</th><td><a
+                                        href="https://github.com/SathvikRinny/project1-nexus">View on
+                                        GitHub</a></td></tr>
+                        </table>
+                    </div>
+                </article>
+
+                <article class="project">
+                    <div class="project-image project-drawing">
+                        <svg viewBox="0 0 480 300" role="img"
+                            aria-labelledby="drawing-title">
+                            <title id="drawing-title">Line drawing of a three-blade toroidal propeller with dimension
+                                lines</title>
                             <defs>
-                            <clipPath id="clip0_158_88">
-                            <rect width="30" height="30" fill="white"/>
-                            </clipPath>
+                                <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                                    <path d="M20 0H0V20" fill="none" stroke="currentColor" stroke-width=".5"
+                                        opacity=".18" />
+                                </pattern>
+                                <marker id="tick" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="8"
+                                    markerHeight="8" orient="auto-start-reverse">
+                                    <path d="M0 2 10 5 0 8z" fill="currentColor" />
+                                </marker>
                             </defs>
-                            </svg>
-                    </a>
-                </div>
-            </div>
-            <div style="width: 35px; height: 35px; position: relative">
-                <div style="width: 29.17px; height: 28.46px; left: 2.92px; top: 0.60px; position: absolute;">
-                    <a href="https://www.linkedin.com/in/sathvik-raju/">
-                        <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M17.5 2.91666C15.5849 2.91666 13.6886 3.29387 11.9192 4.02675C10.1499 4.75963 8.54223 5.83383 7.18805 7.18802C4.45314 9.92292 2.91669 13.6322 2.91669 17.5C2.91669 23.9458 7.1021 29.4146 12.8917 31.3542C13.6209 31.4708 13.8542 31.0187 13.8542 30.625V28.1604C9.8146 29.0354 8.95419 26.2062 8.95419 26.2062C8.28335 24.5146 7.33544 24.0625 7.33544 24.0625C6.00835 23.1583 7.43752 23.1875 7.43752 23.1875C8.89585 23.2896 9.66877 24.6896 9.66877 24.6896C10.9375 26.9062 13.0813 26.25 13.9125 25.9C14.0438 24.9521 14.4229 24.3104 14.8313 23.9458C11.5938 23.5812 8.19585 22.3271 8.19585 16.7708C8.19585 15.1521 8.75002 13.8542 9.69794 12.8187C9.5521 12.4542 9.04169 10.9375 9.84377 8.96874C9.84377 8.96874 11.0688 8.57499 13.8542 10.4562C15.0063 10.1354 16.2604 9.97499 17.5 9.97499C18.7396 9.97499 19.9938 10.1354 21.1459 10.4562C23.9313 8.57499 25.1563 8.96874 25.1563 8.96874C25.9584 10.9375 25.4479 12.4542 25.3021 12.8187C26.25 13.8542 26.8042 15.1521 26.8042 16.7708C26.8042 22.3417 23.3917 23.5667 20.1396 23.9312C20.6646 24.3833 21.1459 25.2729 21.1459 26.6292V30.625C21.1459 31.0187 21.3792 31.4854 22.1229 31.3542C27.9125 29.4 32.0834 23.9458 32.0834 17.5C32.0834 15.5849 31.7061 13.6885 30.9733 11.9192C30.2404 10.1499 29.1662 8.5422 27.812 7.18802C26.4578 5.83383 24.8502 4.75963 23.0808 4.02675C21.3115 3.29387 19.4151 2.91666 17.5 2.91666Z" fill="white"/>
-                            </svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div style="margin-top: 50px;margin-left: auto;margin-right: auto; width: 100%; height: 100%; padding: 10px; flex-direction: column; justify-content: center; align-items: center; gap: 10px; display: inline-flex">
-        <img style="width: 1267px; height: 694px" src="v158_82.png" />
-    </div>
-    <div style="margin-top: 100px;margin-left: auto;margin-right: auto; width: 100%; height: 100%; padding: 10px; flex-direction: row; justify-content: center; align-items: center; gap: 10px; display: inline-flex">
-        <div style="width: 709px; height: 536px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 27px; display: inline-flex">
-            <div style="width: 709px; flex: 1 1 0; color: white; font-size: 52px; font-family: Jacques Francois; font-weight: 400; line-height: 16px; word-wrap: break-word">About Me</div>
-            <div style="width: 709px; height: 429px; color: white; font-size: 35px; font-family: Jacques Francois; font-weight: 400; line-height: 49px; word-wrap: break-word">Hello! I am Sathvik Raju Pothureddy, a recent Mechanical Engineering graduate with a passion for software development. My academic journey has equipped me with a strong foundation in engineering principles and a keen interest in exploring the intersection of engineering and software solutions.</div>
-        </div>
-        <div style="justify-content: flex-start; align-items: center; gap: 10px; display: flex">
-            <img style="width: 541px; height: 685px" src="me.png" />
-        </div>
-    </div>
-    <div style="margin-top: 100px;margin-left: auto;margin-right: auto; width: 100%; height: 100%; padding: 10px; flex-direction: column; justify-content: center; align-items: center; gap: 10px; display: inline-flex">
-        <div style="width: 1265px; justify-content: flex-start; align-items: center; gap: 329px; display: inline-flex">
-            <div style="width: 814px; height: 91px; text-align: right; color: white; font-size: 52px; font-family: Jacques Francois; font-weight: 400; line-height: 16px; word-wrap: break-word">My Certificates</div>
-            <div style="width: 129px; height: 37px; color: white; font-size: 23px; font-family: Jacques Francois; font-weight: 400; text-decoration: underline; line-height: 16px; word-wrap: break-word">
-                <a href="certtificate.html" style="color: white;">View More</a>
-            </div>
-        </div>
-        <div style="justify-content: flex-start; align-items: flex-start; gap: 46px; display: inline-flex">
-            <img style="width: 274.07px; height: 209px" src="u1.png" />
-            <img style="width: 295px; height: 209px" src="a1.png" />
-            <img style="width: 273px; height: 209px" src="hac.png" />
-            <img style="width: 273px; height: 209px" src="RB.png" />
-        </div>
-    </div>
-    <div style="margin-top: 50px; width: 100%; height: 100%; margin-left: auto;margin-right: auto; border-top: 1px white solid; justify-content: space-between; align-items: flex-start; display: inline-flex">
-        <div style="width: 192px; padding: 10px; justify-content: center; align-items: center; gap: 10px; display: flex">
-            <div style="color: white; font-size: 25px; font-family: Jacques Francois; font-weight: 400; line-height: 16px; word-wrap: break-word">Sathvik_Rinny</div>
-        </div>
-        <div style="width: 77px; justify-content: flex-start; align-items: center; gap: 12px; display: flex">
-            <div style="width: 30px; height: 30px; position: relative">
-                <div style="width: 28.80px; height: 28.80px; left: 0.60px; top: 0.60px; position: absolute;">
-                    <a href="">
-                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g clip-path="url(#clip0_158_88)">
-                            <path d="M15 0.600006C7.04698 0.600006 0.599976 7.04701 0.599976 15C0.599976 22.953 7.04698 29.4 15 29.4C22.953 29.4 29.4 22.953 29.4 15C29.4 7.04701 22.953 0.600006 15 0.600006ZM11.475 20.9685H8.55897V11.5845H11.475V20.9685ZM9.99897 10.4325C9.07797 10.4325 8.48248 9.78001 8.48248 8.97301C8.48248 8.14951 9.09597 7.51651 10.0365 7.51651C10.977 7.51651 11.553 8.14951 11.571 8.97301C11.571 9.78001 10.977 10.4325 9.99897 10.4325ZM22.125 20.9685H19.209V15.768C19.209 14.5575 18.786 13.7355 17.7315 13.7355C16.926 13.7355 16.4475 14.292 16.236 14.8275C16.158 15.018 16.1385 15.288 16.1385 15.5565V20.967H13.221V14.577C13.221 13.4055 13.1835 12.426 13.1445 11.583H15.678L15.8115 12.8865H15.87C16.254 12.2745 17.1945 11.3715 18.768 11.3715C20.6865 11.3715 22.125 12.657 22.125 15.42V20.9685Z" fill="white"/>
+                            <rect width="480" height="300" fill="url(#grid)" />
+                            <g class="drawing-part" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="200" cy="150" r="14" />
+                                <circle cx="200" cy="150" r="5" />
+                                <path d="M200 136c-30-40-6-92 10-96s30 46-2 96" />
+                                <path d="M213 157c48-4 82 40 76 56s-56 8-80-44" />
+                                <path d="M187 157c-24 52-74 60-80 44s28-60 76-56" />
                             </g>
-                            <defs>
-                            <clipPath id="clip0_158_88">
-                            <rect width="30" height="30" fill="white"/>
-                            </clipPath>
-                            </defs>
-                            </svg>
-                    </a>
+                            <g class="drawing-dims" fill="none" stroke="currentColor" stroke-width="1">
+                                <path d="M380 50v200" stroke-dasharray="4 4" opacity=".5" />
+                                <path d="M80 270h240" marker-start="url(#tick)" marker-end="url(#tick)" />
+                                <path d="M80 262v16M320 262v16" />
+                                <path d="M200 40V24M200 150h170" stroke-dasharray="6 3 2 3" opacity=".6" />
+                            </g>
+                            <g class="drawing-text" fill="currentColor">
+                                <text x="200" y="292" text-anchor="middle">Ø 240</text>
+                                <text x="392" y="70">Hub Ø 28</text>
+                                <text x="392" y="90">3 blades</text>
+                                <text x="392" y="110">Toroidal</text>
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="project-text">
+                        <h3>Toroidal propeller thrust study</h3>
+                        <p class="project-summary">My B.Tech capstone. We modelled a standard quadcopter propeller
+                            and a toroidal one, then compared their thrust coefficients in a CFD simulation. I led
+                            the team and the design.</p>
+                        <table class="title-block">
+                            <caption class="visually-hidden">Toroidal propeller study details</caption>
+                            <tr><th scope="row">Type</th><td>Engineering research</td></tr>
+                            <tr><th scope="row">Built with</th><td>SolidWorks, Ansys CFD</td></tr>
+                            <tr><th scope="row">Year</th><td>2023</td></tr>
+                            <tr><th scope="row">Code</th><td>Not applicable</td></tr>
+                        </table>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section class="section section-about" id="about" aria-labelledby="about-title">
+            <div class="wrap about-grid">
+                <figure class="portrait">
+                    <img src="assets/img/profile.webp" alt="Sathvik Raju Pothureddy, smiling, leaning on a railing."
+                        width="600" height="1046" loading="lazy">
+                </figure>
+                <div class="about-text">
+                    <h2 id="about-title">From engine drawings to pull requests</h2>
+                    <p>I graduated in Mechanical Engineering from Gudlavalleru Engineering College in 2023. Somewhere
+                        between CAD models and CFD runs, I realised the part I enjoyed most was writing the scripts.
+                    </p>
+                    <p>Engineering still shapes how I work. I measure before I change things, I test what I ship,
+                        and I care whether a tool holds up when someone is using it live in front of a room.</p>
+
+                    <dl class="toolbox">
+                        <div>
+                            <dt>Languages</dt>
+                            <dd>JavaScript, Python, SQL, HTML, CSS</dd>
+                        </div>
+                        <div>
+                            <dt>Frameworks and tools</dt>
+                            <dd>Node.js, Express, Electron, Flask, scikit-learn, pandas, Git, GitHub Actions</dd>
+                        </div>
+                        <div>
+                            <dt>Design</dt>
+                            <dd>Figma, UI and UX prototyping</dd>
+                        </div>
+                        <div>
+                            <dt>Engineering</dt>
+                            <dd>SolidWorks, AutoCAD, Ansys</dd>
+                        </div>
+                    </dl>
                 </div>
             </div>
-            <div style="width: 35px; height: 35px; position: relative">
-                <div style="width: 29.17px; height: 28.46px; left: 2.92px; top: 0.60px; position: absolute;">
-                    <a href="">
-                        <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M17.5 2.91666C15.5849 2.91666 13.6886 3.29387 11.9192 4.02675C10.1499 4.75963 8.54223 5.83383 7.18805 7.18802C4.45314 9.92292 2.91669 13.6322 2.91669 17.5C2.91669 23.9458 7.1021 29.4146 12.8917 31.3542C13.6209 31.4708 13.8542 31.0187 13.8542 30.625V28.1604C9.8146 29.0354 8.95419 26.2062 8.95419 26.2062C8.28335 24.5146 7.33544 24.0625 7.33544 24.0625C6.00835 23.1583 7.43752 23.1875 7.43752 23.1875C8.89585 23.2896 9.66877 24.6896 9.66877 24.6896C10.9375 26.9062 13.0813 26.25 13.9125 25.9C14.0438 24.9521 14.4229 24.3104 14.8313 23.9458C11.5938 23.5812 8.19585 22.3271 8.19585 16.7708C8.19585 15.1521 8.75002 13.8542 9.69794 12.8187C9.5521 12.4542 9.04169 10.9375 9.84377 8.96874C9.84377 8.96874 11.0688 8.57499 13.8542 10.4562C15.0063 10.1354 16.2604 9.97499 17.5 9.97499C18.7396 9.97499 19.9938 10.1354 21.1459 10.4562C23.9313 8.57499 25.1563 8.96874 25.1563 8.96874C25.9584 10.9375 25.4479 12.4542 25.3021 12.8187C26.25 13.8542 26.8042 15.1521 26.8042 16.7708C26.8042 22.3417 23.3917 23.5667 20.1396 23.9312C20.6646 24.3833 21.1459 25.2729 21.1459 26.6292V30.625C21.1459 31.0187 21.3792 31.4854 22.1229 31.3542C27.9125 29.4 32.0834 23.9458 32.0834 17.5C32.0834 15.5849 31.7061 13.6885 30.9733 11.9192C30.2404 10.1499 29.1662 8.5422 27.812 7.18802C26.4578 5.83383 24.8502 4.75963 23.0808 4.02675C21.3115 3.29387 19.4151 2.91666 17.5 2.91666Z" fill="white"/>
-                            </svg>
-                    </a>
-                </div>
+        </section>
+
+        <!-- Experience -->
+        <section class="section" id="experience" aria-labelledby="experience-title">
+            <div class="wrap">
+                <header class="section-header">
+                    <h2 id="experience-title">Experience and education</h2>
+                </header>
+                <ol class="history">
+                    <li>
+                        <p class="history-date"><time datetime="2023-08">Aug 2023</time> to <time
+                                datetime="2023-10">Oct 2023</time></p>
+                        <div>
+                            <h3>UI/UX and web developer intern</h3>
+                            <p class="history-org">Tech Arion Pvt. Ltd., remote</p>
+                            <p>Designed prototypes in Figma and built responsive pages in HTML, CSS and JavaScript
+                                for four client projects.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <p class="history-date"><time datetime="2023-02">Feb 2023</time> to <time
+                                datetime="2023-03">Mar 2023</time></p>
+                        <div>
+                            <h3>Graduate apprentice trainee</h3>
+                            <p class="history-org">Timken Research and Development, Chennai</p>
+                            <p>Operated CNC machines and supported the assembly unit.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <p class="history-date"><time datetime="2019">2019</time> to <time
+                                datetime="2023">2023</time></p>
+                        <div>
+                            <h3>B.Tech, Mechanical Engineering</h3>
+                            <p class="history-org">Gudlavalleru Engineering College</p>
+                            <p>CGPA 7.13. Third prize in the CAD Mania modelling and animation contest.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <p class="history-date"><time datetime="2022-02">Feb 2022</time> to <time
+                                datetime="2022-04">Apr 2022</time></p>
+                        <div>
+                            <h3>Machine learning intern</h3>
+                            <p class="history-org">SmartBridge, remote</p>
+                            <p>Built the first version of the liver patient model and deployed it on IBM Cloud.
+                                Rated 9 out of 10 for skills.</p>
+                        </div>
+                    </li>
+                </ol>
             </div>
+        </section>
+
+        <!-- Certificates -->
+        <section class="section" id="certificates" aria-labelledby="certificates-title">
+            <div class="wrap">
+                <header class="section-header">
+                    <h2 id="certificates-title">Certificates</h2>
+                    <p>Select one to view it full size.</p>
+                </header>
+                <ul class="certs">
+                    <li><button type="button" class="cert" data-full="assets/img/certs/techarion.webp">
+                            <img src="assets/img/certs/techarion-thumb.webp" alt="" width="520" height="671"
+                                loading="lazy">
+                            <span class="cert-name">UI/UX design internship</span>
+                            <span class="cert-issuer">Tech Arion, 2023</span>
+                        </button></li>
+                    <li><button type="button" class="cert" data-full="assets/img/certs/smartbridge.webp">
+                            <img src="assets/img/certs/smartbridge-thumb.webp" alt="" width="520" height="752"
+                                loading="lazy">
+                            <span class="cert-name">Machine learning internship</span>
+                            <span class="cert-issuer">SmartBridge, 2022</span>
+                        </button></li>
+                    <li><button type="button" class="cert" data-full="assets/img/certs/udemy-python.webp">
+                            <img src="assets/img/certs/udemy-python-thumb.webp" alt="" width="520" height="387"
+                                loading="lazy">
+                            <span class="cert-name">Complete Python Bootcamp</span>
+                            <span class="cert-issuer">Udemy</span>
+                        </button></li>
+                    <li><button type="button" class="cert" data-full="assets/img/certs/hackerrank-python.webp">
+                            <img src="assets/img/certs/hackerrank-python-thumb.webp" alt="" width="520"
+                                height="398" loading="lazy">
+                            <span class="cert-name">Python (Basic)</span>
+                            <span class="cert-issuer">HackerRank, 2022</span>
+                        </button></li>
+                    <li><button type="button" class="cert" data-full="assets/img/certs/accenture.webp">
+                            <img src="assets/img/certs/accenture-thumb.webp" alt="" width="520" height="368"
+                                loading="lazy">
+                            <span class="cert-name">Consultant virtual experience</span>
+                            <span class="cert-issuer">Accenture</span>
+                        </button></li>
+                    <li><button type="button" class="cert" data-full="assets/img/certs/robogen-3d-printing.webp">
+                            <img src="assets/img/certs/robogen-3d-printing-thumb.webp" alt="" width="520"
+                                height="372" loading="lazy">
+                            <span class="cert-name">3D printing workshop</span>
+                            <span class="cert-issuer">RoboGEN, 2022</span>
+                        </button></li>
+                    <li><button type="button" class="cert" data-full="assets/img/certs/cad-mania-merit.webp">
+                            <img src="assets/img/certs/cad-mania-merit-thumb.webp" alt="" width="520" height="370"
+                                loading="lazy">
+                            <span class="cert-name">CAD Mania, third prize</span>
+                            <span class="cert-issuer">Gudlavalleru Engineering College</span>
+                        </button></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section class="section section-contact" id="contact" aria-labelledby="contact-title">
+            <div class="wrap">
+                <h2 id="contact-title">Hiring, or have a project in mind?</h2>
+                <p class="contact-lead">Email me. I usually reply within a day.</p>
+                <div class="email-row">
+                    <a class="email-link" href="mailto:sathvikrinny@gmail.com">sathvikrinny@gmail.com</a>
+                    <button type="button" class="button button-line copy-email"
+                        data-email="sathvikrinny@gmail.com">Copy email</button>
+                    <span class="copy-status" role="status" aria-live="polite"></span>
+                </div>
+                <ul class="elsewhere">
+                    <li><a href="https://www.linkedin.com/in/sathvik-raju/">LinkedIn</a></li>
+                    <li><a href="https://github.com/SathvikRinny">GitHub</a></li>
+                    <li><a href="resume.html">Resume (printable)</a></li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="wrap footer-inner">
+            <p>© <span id="year">2026</span> Sathvik Raju Pothureddy</p>
+            <p>Built by hand with HTML, CSS and JavaScript.</p>
         </div>
-    </div>
+    </footer>
+
+    <dialog class="viewer" id="viewer" aria-label="Image viewer">
+        <form method="dialog" class="viewer-bar">
+            <p class="viewer-title" id="viewer-title"></p>
+            <button class="viewer-close" value="close">Close</button>
+        </form>
+        <img id="viewer-img" src="" alt="">
+        <div class="viewer-nav">
+            <button type="button" class="key" data-step="-1">Previous</button>
+            <span id="viewer-count"></span>
+            <button type="button" class="key" data-step="1">Next</button>
+        </div>
+    </dialog>
+
+    <script src="assets/js/main.js"></script>
 </body>
+
 </html>
-
-
-
