@@ -1,476 +1,735 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Sathvik Raju Pothureddy, software developer</title>
-    <meta name="description"
-        content="Sathvik Raju Pothureddy is a software developer and mechanical engineer. He builds desktop apps, web apps and machine-learning tools, including GloryBoard, presentation software used in church services.">
-    <meta property="og:title" content="Sathvik Raju Pothureddy, software developer">
-    <meta property="og:description"
-        content="Desktop apps, web apps and machine-learning tools, from a mechanical engineer turned developer.">
-    <meta property="og:image" content="assets/img/projects/gloryboard.webp">
-    <meta property="og:type" content="website">
-    <meta name="theme-color" content="#EEF0F3" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#0F1426" media="(prefers-color-scheme: dark)">
-    <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%230E1630'/><rect x='10' y='14' width='44' height='28' rx='3' fill='none' stroke='%23FFC857' stroke-width='4'/><path d='M24 52h16' stroke='%23FFC857' stroke-width='4' stroke-linecap='round'/></svg>">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sathvik Raju Pothureddy — Software Developer</title>
+<meta name="description" content="Sathvik Raju Pothureddy builds websites, web apps, desktop apps and AI tools for businesses and churches. Based in Gudivada, India, working with clients anywhere.">
+<meta property="og:title" content="Sathvik Raju Pothureddy — Software Developer">
+<meta property="og:description" content="Websites, web apps, desktop apps and AI tools for businesses and churches.">
+<meta property="og:image" content="assets/img/projects/gloryboard.webp">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#070B18">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%230E1630'/><circle cx='32' cy='24' r='12' fill='none' stroke='%23FFC857' stroke-width='4'/><path d='M14 54c2-14 10-20 18-20s16 6 18 20' fill='none' stroke='%23FFC857' stroke-width='4' stroke-linecap='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
+<style>
+    /* Layout: a fixed 3D stage behind full-height scenes. Text sits on the side opposite the figure on desktop,
+       and at the bottom of each scene on phones. One committed dark "stage" look. */
+    :root {
+        --night: #070B18;
+        --panel: #0E1630;
+        --line: #26304F;
+        --text: #F5F2EA;
+        --soft: #A7AFC6;
+        --gold: #FFC857;
+        --cobalt: #6E8BFF;
+        --display: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+        --wide: "wdth" 125;
+        color-scheme: dark;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+        margin: 0;
+        background: var(--night);
+        color: var(--text);
+        font-family: var(--display);
+        font-size: 16px;
+        line-height: 1.6;
+        overflow-x: hidden;
+    }
+    h1, h2, h3 { margin: 0; line-height: 1.05; text-wrap: balance; }
+    p { margin: 0; text-wrap: pretty; }
+    a { color: var(--gold); }
+    :focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .skip-link {
+        position: absolute; top: -60px; left: 16px; z-index: 50;
+        padding: 10px 16px; border-radius: 8px; background: var(--gold); color: var(--night);
+        font-weight: 700; text-decoration: none;
+    }
+    .skip-link:focus { top: 12px; }
+
+    /* ---------- Fixed 3D stage ---------- */
+    #stage {
+        position: fixed; inset: 0;
+        width: 100%; height: 100%;
+        z-index: 0;
+        display: block;
+    }
+    .spotlight {
+        position: fixed; inset: 0; z-index: 0; pointer-events: none;
+        background:
+            radial-gradient(60% 45% at var(--spot-x, 70%) 42%, rgba(255, 200, 87, .14), transparent 70%),
+            radial-gradient(40% 35% at var(--spot-x, 70%) 55%, rgba(110, 139, 255, .16), transparent 70%);
+        transition: --spot-x .6s;
+    }
+    .grain {
+        position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .5;
+        background-image: radial-gradient(rgba(255, 255, 255, .05) 1px, transparent 1px);
+        background-size: 3px 3px;
+    }
+
+    .loading {
+        position: fixed; inset: 0; z-index: 5;
+        display: grid; place-items: center;
+        background: var(--night);
+        color: var(--soft);
+        font-size: .95rem;
+        text-align: center;
+        padding: 20px;
+        transition: opacity .6s, visibility .6s;
+    }
+    .loading.done { opacity: 0; visibility: hidden; }
+    .loading b { display: block; color: var(--text); font-size: 1.4rem; font-variation-settings: var(--wide); margin-bottom: 6px; }
+
+    /* ---------- Header ---------- */
+    .top {
+        position: fixed; top: 0; left: 0; right: 0; z-index: 4;
+        display: flex; justify-content: space-between; align-items: center;
+        padding: calc(14px + env(safe-area-inset-top, 0px)) max(20px, env(safe-area-inset-right, 0px)) 14px max(20px, env(safe-area-inset-left, 0px));
+        background: linear-gradient(var(--night), transparent);
+    }
+    .brand { font-weight: 750; font-variation-settings: var(--wide); color: var(--text); text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; }
+    .brand span { color: var(--gold); }
+    .top nav { display: flex; gap: 2px; }
+    .top nav a { color: var(--soft); text-decoration: none; font-size: .92rem; min-height: 44px; display: inline-flex; align-items: center; padding: 0 10px; }
+    .top nav a:hover, .top nav a[aria-current="true"] { color: var(--text); }
+    @media (max-width: 640px) { .top nav a:not(.cta) { display: none; } }
+    .cta { border: 1.5px solid var(--gold); border-radius: 999px; color: var(--gold) !important; padding: 0 16px !important; }
+
+    /* ---------- Scenes ---------- */
+    main { position: relative; z-index: 1; }
+
+    .scene {
+        position: relative;
+        min-height: 100svh;
+        display: grid;
+        align-items: center;
+        padding: 96px max(20px, env(safe-area-inset-right, 0px)) 64px max(20px, env(safe-area-inset-left, 0px));
+    }
+    .scene-inner { width: 100%; max-width: 1180px; margin-inline: auto; display: grid; }
+    .copy { display: grid; gap: 18px; max-width: 520px; }
+    .side-left .copy { justify-self: start; }
+    .side-right .copy { justify-self: end; }
+
+    .kicker { color: var(--gold); font-weight: 600; }
+    .big { font-size: clamp(2.4rem, 1.2rem + 5vw, 5.4rem); font-variation-settings: var(--wide); letter-spacing: -0.025em; font-weight: 800; }
+    h2 { font-size: clamp(2rem, 1.2rem + 3.4vw, 3.8rem); font-variation-settings: var(--wide); letter-spacing: -0.02em; }
+    .copy > p { color: var(--soft); font-size: 1.1rem; max-width: 46ch; }
+
+    /* Rotating word in the hero */
+    .swap { display: inline-grid; height: 1.05em; overflow: hidden; vertical-align: bottom; color: var(--gold); }
+    .swap span { grid-area: 1 / 1; transform: translateY(110%); transition: transform .6s cubic-bezier(.3, .8, .2, 1); white-space: nowrap; }
+    .swap span.in { transform: translateY(0); }
+    .swap span.out { transform: translateY(-110%); }
+
+    .buttons { display: flex; flex-wrap: wrap; gap: 12px; }
+    .btn {
+        display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px;
+        border-radius: 999px; border: 1.5px solid var(--text);
+        color: var(--text); text-decoration: none; font-weight: 600;
+        background: transparent; font: inherit; cursor: pointer;
+    }
+    .btn-gold { background: var(--gold); border-color: var(--gold); color: var(--night); }
+
+    .services { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
+    .services li { padding: 14px 0; border-top: 1px solid var(--line); }
+    .services b { display: block; font-size: 1.15rem; }
+    .services span { color: var(--soft); }
+
+    /* ---------- Work: pinned horizontal gallery ---------- */
+    .work { position: relative; height: 320vh; }
+    .work-pin { position: sticky; top: 0; height: 100svh; overflow: hidden; display: grid; align-content: center; gap: 28px; }
+    .work-head { padding-inline: max(20px, env(safe-area-inset-left, 0px)); max-width: 1180px; width: 100%; margin-inline: auto; }
+    .track { display: flex; gap: 28px; padding-inline: max(20px, calc((100vw - 1180px) / 2)); will-change: transform; }
+    .card {
+        flex: 0 0 min(560px, 82vw);
+        display: grid; gap: 14px;
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: rgba(14, 22, 48, .7);
+        backdrop-filter: blur(6px);
+    }
+    .card img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top left; border-radius: 10px; display: block; }
+    .card-num { color: var(--gold); font-weight: 700; font-variation-settings: var(--wide); }
+    .card h3 { font-size: 1.5rem; font-variation-settings: var(--wide); }
+    .card p { color: var(--soft); }
+    .card-next { place-content: center; text-align: center; min-height: 360px; border-style: dashed; }
+    .card-next h3 { font-size: 2rem; }
+
+    @media (max-width: 760px) {
+        .work { height: auto; }
+        .work-pin { position: static; height: auto; padding-block: 96px 40px; }
+        .track { flex-direction: column; padding-inline: max(20px, env(safe-area-inset-left, 0px)); transform: none !important; }
+        .card { flex-basis: auto; }
+    }
+
+    /* ---------- Process timeline with glowing line ---------- */
+    .steps { position: relative; margin: 8px 0 0; padding: 0 0 0 28px; list-style: none; display: grid; gap: 28px; }
+    .steps::before { content: ""; position: absolute; left: 6px; top: 6px; bottom: 6px; width: 2px; background: var(--line); }
+    .steps::after {
+        content: ""; position: absolute; left: 6px; top: 6px; width: 2px;
+        height: calc(var(--fill, 0) * (100% - 12px));
+        background: linear-gradient(var(--gold), var(--cobalt));
+        box-shadow: 0 0 12px var(--cobalt);
+    }
+    .steps li { position: relative; }
+    .steps li::before {
+        content: ""; position: absolute; left: -28px; top: 6px; width: 14px; height: 14px; border-radius: 50%;
+        background: var(--night); border: 2px solid var(--line); transition: border-color .3s, box-shadow .3s;
+    }
+    .steps li.lit::before { border-color: var(--gold); box-shadow: 0 0 12px var(--gold); }
+    .steps h3 { font-size: 1.2rem; }
+    .steps p { color: var(--soft); }
+
+    /* ---------- Tech stack balls ---------- */
+    .tech { min-height: 100svh; display: grid; grid-template-rows: auto 1fr; padding-top: 96px; }
+    .tech header { padding-inline: max(20px, env(safe-area-inset-left, 0px)); text-align: center; display: grid; gap: 10px; }
+    .tech header p { color: var(--soft); }
+    #balls { width: 100%; height: min(70vh, 620px); display: block; touch-action: pan-y; }
+
+    /* ---------- Contact ---------- */
+    #contact .copy { max-width: 680px; }
+    .email { font-size: clamp(1.1rem, .55rem + 2.3vw, 2.4rem); font-weight: 800; font-variation-settings: var(--wide); color: var(--gold); white-space: nowrap; }
+    @media (max-width: 420px) { .email { white-space: normal; overflow-wrap: anywhere; } }
+    .copied { color: var(--soft); min-height: 1.4em; }
+    footer { position: relative; z-index: 1; padding: 24px max(20px, env(safe-area-inset-left, 0px)); color: var(--soft); font-size: .85rem; text-align: center; border-top: 1px solid var(--line); }
+    footer a { color: var(--soft); }
+
+    /* Cursor glow (mouse only) */
+    .glow-dot {
+        position: fixed; left: 0; top: 0; z-index: 3; pointer-events: none;
+        width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%;
+        background: var(--cobalt); box-shadow: 0 0 18px 6px rgba(110, 139, 255, .6);
+        opacity: 0; transition: opacity .3s;
+    }
+    @media (hover: hover) and (pointer: fine) { .glow-dot.on { opacity: .9; } }
+
+    /* Phones: the figure stands in the top half, text sits at the bottom of each scene. */
+    @media (max-width: 760px) {
+        .scene { align-items: end; padding-bottom: 48px; }
+        .side-left .copy, .side-right .copy { justify-self: stretch; max-width: none; }
+        .scene .copy {
+            padding: 22px 18px;
+            border-radius: 16px;
+            background: linear-gradient(rgba(7, 11, 24, .55), rgba(7, 11, 24, .92) 18%);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        .swap span { transition: none; }
+    }
+</style>
 </head>
-
 <body>
-    <a class="skip-link" href="#main">Skip to content</a>
 
-    <header class="site-header">
-        <div class="wrap header-inner">
-            <a class="wordmark" href="#top" aria-label="Sathvik, back to top">
-                <svg viewBox="0 0 28 24" width="28" height="24" aria-hidden="true">
-                    <rect x="1.5" y="1.5" width="25" height="15" rx="2.5" fill="var(--screen)" stroke="var(--ink)"
-                        stroke-width="1.5" />
-                    <path d="M7 7h14M9 11h10" stroke="var(--lamp)" stroke-width="2" stroke-linecap="round" />
-                    <path d="M10 22h8M14 17v5" stroke="var(--ink)" stroke-width="1.5" stroke-linecap="round" />
-                </svg>
-                <span>Sathvik</span>
-            </a>
-            <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
-            <nav class="site-nav" id="site-nav" aria-label="Main">
-                <a href="#work">Work</a>
-                <a href="#about">About</a>
-                <a href="#experience">Experience</a>
-                <a href="#certificates">Certificates</a>
-                <a href="#contact">Contact</a>
-                <a class="nav-resume" href="resume.html">Resume</a>
-            </nav>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<canvas id="stage" aria-hidden="true"></canvas>
+<div class="spotlight" id="spot" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="glow-dot" id="dot" aria-hidden="true"></div>
+<div class="loading" id="loading" role="status"><div><b>Setting the stage…</b>Loading the 3D figure</div></div>
+
+<header class="top">
+    <a class="brand" href="#hero">Sathvik<span>.</span></a>
+    <nav aria-label="Main">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#work">Work</a>
+        <a href="#tech">Tech</a>
+        <a class="cta" href="#contact">Get a quote</a>
+    </nav>
+</header>
+
+<main id="main">
+    <section class="scene side-left" id="hero" data-scene="hero" aria-labelledby="hero-title">
+        <div class="scene-inner">
+            <div class="copy">
+                <p class="kicker">Sathvik Raju Pothureddy</p>
+                <h1 class="big" id="hero-title">I build
+                    <span class="swap" aria-live="polite"><span class="in">websites</span><span>web apps</span><span>desktop apps</span><span>AI tools</span></span>
+                </h1>
+                <p>Freelance software developer for businesses and churches. Based in Gudivada, India, working with
+                    clients anywhere.</p>
+                <div class="buttons"><a class="btn btn-gold" href="#contact">Get a quote</a><a class="btn" href="#work">See my work</a></div>
+            </div>
         </div>
-    </header>
+    </section>
 
-    <main id="main">
-        <!-- Hero: a projector screen with an operator console, like GloryBoard -->
-        <section class="hero" id="top" aria-labelledby="hero-title">
-            <div class="wrap">
-                <div class="hero-intro">
-                    <h1 id="hero-title">Sathvik Raju Pothureddy</h1>
-                    <p class="hero-role">Software developer. Mechanical engineer by degree. Based in Gudivada,
-                        India.</p>
-                </div>
-
-                <div class="stage">
-                    <div class="screen" id="screen" aria-roledescription="slideshow"
-                        aria-label="About Sathvik, in five slides">
-                        <div class="slides" aria-live="polite">
-                            <figure class="slide is-live" data-index="0">
-                                <blockquote>Hi, I’m Sathvik. I write software people use in front of a room.
-                                </blockquote>
-                                <figcaption>Software developer, since 2023</figcaption>
-                            </figure>
-                            <figure class="slide" data-index="1" hidden>
-                                <blockquote>Some of it puts song lyrics and Bible verses on five screens at once.
-                                </blockquote>
-                                <figcaption>GloryBoard, desktop app</figcaption>
-                            </figure>
-                            <figure class="slide" data-index="2" hidden>
-                                <blockquote>Some of it reads a blood test and estimates liver-disease risk.
-                                </blockquote>
-                                <figcaption>Liver Health Check, machine learning</figcaption>
-                            </figure>
-                            <figure class="slide" data-index="3" hidden>
-                                <blockquote>I trained to design propellers. I stayed for the code.</blockquote>
-                                <figcaption>B.Tech, Mechanical Engineering, 2023</figcaption>
-                            </figure>
-                            <figure class="slide" data-index="4" hidden>
-                                <blockquote>Scroll down to see the work.</blockquote>
-                                <figcaption>Five projects, three internships</figcaption>
-                            </figure>
-                        </div>
-                        <p class="screen-blank" hidden>Screen blanked. Press Blank again to show it.</p>
-                    </div>
-
-                    <div class="console" role="group" aria-label="Slide controls">
-                        <div class="console-buttons">
-                            <button type="button" class="key" data-action="prev" aria-keyshortcuts="ArrowLeft">
-                                <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true">
-                                    <path d="M12.5 4.5 7 10l5.5 5.5" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                                <span>Previous</span>
-                            </button>
-                            <button type="button" class="key key-primary" data-action="next"
-                                aria-keyshortcuts="ArrowRight">
-                                <span>Next</span>
-                                <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true">
-                                    <path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </button>
-                            <button type="button" class="key" data-action="blank" aria-pressed="false"
-                                aria-keyshortcuts="B">Blank</button>
-                        </div>
-                        <div class="console-status">
-                            <span class="on-air"><span class="lamp" aria-hidden="true"></span><span
-                                    class="on-air-text">Live</span></span>
-                            <span class="counter"><span id="slide-num">1</span> of 5</span>
-                        </div>
-                    </div>
-                    <p class="console-hint">Use the arrow keys to change slides.</p>
-                </div>
-
-                <div class="hero-actions">
-                    <a class="button button-solid" href="#work">See my projects</a>
-                    <a class="button button-line" href="mailto:sathvikrinny@gmail.com">Email me</a>
-                    <p class="availability">Open to software developer roles and freelance work.</p>
-                </div>
+    <section class="scene side-right" id="about" data-scene="about" aria-labelledby="about-title">
+        <div class="scene-inner">
+            <div class="copy">
+                <h2 id="about-title">Hi, I’m Sathvik</h2>
+                <p>I started out as a mechanical engineer and now build software. I plan before I build, test before I
+                    ship, and work directly with you, with no agency in between.</p>
+                <p>I speak English, Telugu and Hindi.</p>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Work -->
-        <section class="section" id="work" aria-labelledby="work-title">
-            <div class="wrap">
-                <header class="section-header">
-                    <h2 id="work-title">Selected work</h2>
-                    <p>Five projects, from a desktop app used every week to an engineering study in Ansys.</p>
-                </header>
+    <section class="scene side-left" id="services" data-scene="desk" aria-labelledby="services-title">
+        <div class="scene-inner">
+            <div class="copy">
+                <h2 id="services-title">What I build</h2>
+                <ul class="services">
+                    <li><b>Websites</b><span>Fast, professional, ready for phones</span></li>
+                    <li><b>Web apps and dashboards</b><span>Bookings, admin panels, billing</span></li>
+                    <li><b>Desktop apps</b><span>Windows and Mac, even offline</span></li>
+                    <li><b>AI and data tools</b><span>Chatbots, reports, predictions</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
-                <article class="project project-lead">
-                    <a class="project-image" href="assets/img/projects/gloryboard.webp" data-zoom
-                        aria-label="Enlarge GloryBoard screenshot">
-                        <img src="assets/img/projects/gloryboard.webp"
-                            alt="GloryBoard control window. Song slides on the left, the live slide highlighted, and text style controls on the right."
-                            width="960" height="600" loading="lazy">
-                    </a>
-                    <div class="project-text">
-                        <h3>GloryBoard</h3>
-                        <p class="project-summary">Presentation software for church services. One operator sends
-                            lyrics, Bible verses, images, video and a live camera to every screen in the room, with
-                            a separate view for the people on stage.</p>
-                        <ul class="project-points">
-                            <li>English and Telugu Bibles built in, so it works without internet</li>
-                            <li>Song library with search and PDF import</li>
-                            <li>Windows and macOS installers built automatically on every push</li>
-                        </ul>
-                        <table class="title-block">
-                            <caption class="visually-hidden">GloryBoard details</caption>
-                            <tr><th scope="row">Type</th><td>Desktop app</td></tr>
-                            <tr><th scope="row">Built with</th><td>Electron, JavaScript, Python</td></tr>
-                            <tr><th scope="row">Year</th><td>2025–2026</td></tr>
-                            <tr><th scope="row">Code</th><td>Private. Demo on request.</td></tr>
-                        </table>
-                    </div>
+    <section class="work" id="work" data-scene="work" aria-labelledby="work-title">
+        <div class="work-pin">
+            <div class="work-head"><h2 id="work-title">My work</h2></div>
+            <div class="track" id="track">
+                <article class="card">
+                    <img src="assets/img/projects/gloryboard.webp" alt="GloryBoard control window with song slides" width="960" height="600" loading="lazy">
+                    <span class="card-num">01</span>
+                    <h3>GloryBoard</h3>
+                    <p>Presentation software for church services: lyrics, Bible verses, video and a live camera on every
+                        screen in the room.</p>
                 </article>
-
-                <article class="project">
-                    <a class="project-image" href="assets/img/projects/liver.webp" data-zoom
-                        aria-label="Enlarge Liver Health Check screenshot">
-                        <img src="assets/img/projects/liver.webp"
-                            alt="Liver Health Check home page with a heading and a Start the check button."
-                            width="960" height="600" loading="lazy">
-                    </a>
-                    <div class="project-text">
-                        <h3>Liver Health Check</h3>
-                        <p class="project-summary">Enter ten values from a liver function test and get a risk
-                            percentage, plus a list of results outside the normal range.</p>
-                        <ul class="project-points">
-                            <li>Random forest chosen from three models by cross-validation (ROC AUC 0.78)</li>
-                            <li>JSON API and automated tests</li>
-                        </ul>
-                        <table class="title-block">
-                            <caption class="visually-hidden">Liver Health Check details</caption>
-                            <tr><th scope="row">Type</th><td>Machine-learning web app</td></tr>
-                            <tr><th scope="row">Built with</th><td>Python, Flask, scikit-learn</td></tr>
-                            <tr><th scope="row">Year</th><td>2022, rebuilt 2026</td></tr>
-                            <tr><th scope="row">Code</th><td><a
-                                        href="https://github.com/SathvikRinny/Liver_Paitent_Analysis_NexsuProject_3s">View
-                                        on GitHub</a></td></tr>
-                        </table>
-                    </div>
+                <article class="card">
+                    <img src="assets/img/projects/liver.webp" alt="Liver Health Check home page" width="960" height="600" loading="lazy">
+                    <span class="card-num">02</span>
+                    <h3>Liver Health Check</h3>
+                    <p>An AI web app that estimates liver-disease risk from ten blood-test values.</p>
                 </article>
-
-                <article class="project">
-                    <a class="project-image" href="assets/img/projects/techy.webp" data-zoom
-                        aria-label="Enlarge Techy Software website screenshot">
-                        <img src="assets/img/projects/techy.webp"
-                            alt="Techy Software website hero with a purple background and a book cover illustration."
-                            width="960" height="600" loading="lazy">
-                    </a>
-                    <div class="project-text">
-                        <h3>Techy Software website</h3>
-                        <p class="project-summary">A business website with contact and star-rating feedback forms.
-                            Submissions go to a small Express API that validates and rate-limits them.</p>
-                        <table class="title-block">
-                            <caption class="visually-hidden">Techy Software website details</caption>
-                            <tr><th scope="row">Type</th><td>Full-stack website</td></tr>
-                            <tr><th scope="row">Built with</th><td>Node.js, Express, JavaScript</td></tr>
-                            <tr><th scope="row">Year</th><td>2024</td></tr>
-                            <tr><th scope="row">Code</th><td><a
-                                        href="https://github.com/SathvikRinny/NexusProject2">View on
-                                        GitHub</a></td></tr>
-                        </table>
-                    </div>
-                </article>
-
-                <article class="project">
-                    <a class="project-image" href="assets/img/projects/login.webp" data-zoom
-                        aria-label="Enlarge sign-up page screenshot">
-                        <img src="assets/img/projects/login.webp"
-                            alt="Sign-up form on a frosted glass card with a password strength bar."
-                            width="960" height="600" loading="lazy">
-                    </a>
-                    <div class="project-text">
-                        <h3>Log-in and sign-up pages</h3>
-                        <p class="project-summary">Account screens with live validation, a password-strength meter
-                            and show-password buttons. Built without a framework.</p>
-                        <table class="title-block">
-                            <caption class="visually-hidden">Log-in and sign-up pages details</caption>
-                            <tr><th scope="row">Type</th><td>Front-end</td></tr>
-                            <tr><th scope="row">Built with</th><td>HTML, CSS, JavaScript</td></tr>
-                            <tr><th scope="row">Year</th><td>2024</td></tr>
-                            <tr><th scope="row">Code</th><td><a
-                                        href="https://github.com/SathvikRinny/project1-nexus">View on
-                                        GitHub</a></td></tr>
-                        </table>
-                    </div>
-                </article>
-
-                <article class="project">
-                    <div class="project-image project-drawing">
-                        <svg viewBox="0 0 480 300" role="img"
-                            aria-labelledby="drawing-title">
-                            <title id="drawing-title">Line drawing of a three-blade toroidal propeller with dimension
-                                lines</title>
-                            <defs>
-                                <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-                                    <path d="M20 0H0V20" fill="none" stroke="currentColor" stroke-width=".5"
-                                        opacity=".18" />
-                                </pattern>
-                                <marker id="tick" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="8"
-                                    markerHeight="8" orient="auto-start-reverse">
-                                    <path d="M0 2 10 5 0 8z" fill="currentColor" />
-                                </marker>
-                            </defs>
-                            <rect width="480" height="300" fill="url(#grid)" />
-                            <g class="drawing-part" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="200" cy="150" r="14" />
-                                <circle cx="200" cy="150" r="5" />
-                                <path d="M200 136c-30-40-6-92 10-96s30 46-2 96" />
-                                <path d="M213 157c48-4 82 40 76 56s-56 8-80-44" />
-                                <path d="M187 157c-24 52-74 60-80 44s28-60 76-56" />
-                            </g>
-                            <g class="drawing-dims" fill="none" stroke="currentColor" stroke-width="1">
-                                <path d="M380 50v200" stroke-dasharray="4 4" opacity=".5" />
-                                <path d="M80 270h240" marker-start="url(#tick)" marker-end="url(#tick)" />
-                                <path d="M80 262v16M320 262v16" />
-                                <path d="M200 40V24M200 150h170" stroke-dasharray="6 3 2 3" opacity=".6" />
-                            </g>
-                            <g class="drawing-text" fill="currentColor">
-                                <text x="200" y="292" text-anchor="middle">Ø 240</text>
-                                <text x="392" y="70">Hub Ø 28</text>
-                                <text x="392" y="90">3 blades</text>
-                                <text x="392" y="110">Toroidal</text>
-                            </g>
-                        </svg>
-                    </div>
-                    <div class="project-text">
-                        <h3>Toroidal propeller thrust study</h3>
-                        <p class="project-summary">My B.Tech capstone. We modelled a standard quadcopter propeller
-                            and a toroidal one, then compared their thrust coefficients in a CFD simulation. I led
-                            the team and the design.</p>
-                        <table class="title-block">
-                            <caption class="visually-hidden">Toroidal propeller study details</caption>
-                            <tr><th scope="row">Type</th><td>Engineering research</td></tr>
-                            <tr><th scope="row">Built with</th><td>SolidWorks, Ansys CFD</td></tr>
-                            <tr><th scope="row">Year</th><td>2023</td></tr>
-                            <tr><th scope="row">Code</th><td>Not applicable</td></tr>
-                        </table>
-                    </div>
+                <article class="card card-next">
+                    <span class="card-num">03</span>
+                    <h3>Your project</h3>
+                    <p>New client work is on the way. Yours could be next.</p>
+                    <div><a class="btn btn-gold" href="#contact">Start a project</a></div>
                 </article>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- About -->
-        <section class="section section-about" id="about" aria-labelledby="about-title">
-            <div class="wrap about-grid">
-                <figure class="portrait">
-                    <img src="assets/img/profile.webp" alt="Sathvik Raju Pothureddy, smiling, leaning on a railing."
-                        width="600" height="1046" loading="lazy">
-                </figure>
-                <div class="about-text">
-                    <h2 id="about-title">From engine drawings to pull requests</h2>
-                    <p>I graduated in Mechanical Engineering from Gudlavalleru Engineering College in 2023. Somewhere
-                        between CAD models and CFD runs, I realised the part I enjoyed most was writing the scripts.
-                    </p>
-                    <p>Engineering still shapes how I work. I measure before I change things, I test what I ship,
-                        and I care whether a tool holds up when someone is using it live in front of a room.</p>
-
-                    <dl class="toolbox">
-                        <div>
-                            <dt>Languages</dt>
-                            <dd>JavaScript, Python, SQL, HTML, CSS</dd>
-                        </div>
-                        <div>
-                            <dt>Frameworks and tools</dt>
-                            <dd>Node.js, Express, Electron, Flask, scikit-learn, pandas, Git, GitHub Actions</dd>
-                        </div>
-                        <div>
-                            <dt>Design</dt>
-                            <dd>Figma, UI and UX prototyping</dd>
-                        </div>
-                        <div>
-                            <dt>Engineering</dt>
-                            <dd>SolidWorks, AutoCAD, Ansys</dd>
-                        </div>
-                    </dl>
-                </div>
-            </div>
-        </section>
-
-        <!-- Experience -->
-        <section class="section" id="experience" aria-labelledby="experience-title">
-            <div class="wrap">
-                <header class="section-header">
-                    <h2 id="experience-title">Experience and education</h2>
-                </header>
-                <ol class="history">
-                    <li>
-                        <p class="history-date"><time datetime="2023-08">Aug 2023</time> to <time
-                                datetime="2023-10">Oct 2023</time></p>
-                        <div>
-                            <h3>UI/UX and web developer intern</h3>
-                            <p class="history-org">Tech Arion Pvt. Ltd., remote</p>
-                            <p>Designed prototypes in Figma and built responsive pages in HTML, CSS and JavaScript
-                                for four client projects.</p>
-                        </div>
-                    </li>
-                    <li>
-                        <p class="history-date"><time datetime="2023-02">Feb 2023</time> to <time
-                                datetime="2023-03">Mar 2023</time></p>
-                        <div>
-                            <h3>Graduate apprentice trainee</h3>
-                            <p class="history-org">Timken Research and Development, Chennai</p>
-                            <p>Operated CNC machines and supported the assembly unit.</p>
-                        </div>
-                    </li>
-                    <li>
-                        <p class="history-date"><time datetime="2019">2019</time> to <time
-                                datetime="2023">2023</time></p>
-                        <div>
-                            <h3>B.Tech, Mechanical Engineering</h3>
-                            <p class="history-org">Gudlavalleru Engineering College</p>
-                            <p>CGPA 7.13. Third prize in the CAD Mania modelling and animation contest.</p>
-                        </div>
-                    </li>
-                    <li>
-                        <p class="history-date"><time datetime="2022-02">Feb 2022</time> to <time
-                                datetime="2022-04">Apr 2022</time></p>
-                        <div>
-                            <h3>Machine learning intern</h3>
-                            <p class="history-org">SmartBridge, remote</p>
-                            <p>Built the first version of the liver patient model and deployed it on IBM Cloud.
-                                Rated 9 out of 10 for skills.</p>
-                        </div>
-                    </li>
+    <section class="scene side-right" id="process" data-scene="process" aria-labelledby="process-title">
+        <div class="scene-inner">
+            <div class="copy">
+                <h2 id="process-title">How we’ll work</h2>
+                <ol class="steps" id="steps">
+                    <li><h3>Talk</h3><p>A free call about what you need and your deadline.</p></li>
+                    <li><h3>Plan and quote</h3><p>Features, timeline and a fixed price, in writing.</p></li>
+                    <li><h3>Build</h3><p>A working preview every week, so you can try it.</p></li>
+                    <li><h3>Launch and support</h3><p>I put it live and help after launch.</p></li>
                 </ol>
             </div>
-        </section>
-
-        <!-- Certificates -->
-        <section class="section" id="certificates" aria-labelledby="certificates-title">
-            <div class="wrap">
-                <header class="section-header">
-                    <h2 id="certificates-title">Certificates</h2>
-                    <p>Select one to view it full size.</p>
-                </header>
-                <ul class="certs">
-                    <li><button type="button" class="cert" data-full="assets/img/certs/techarion.webp">
-                            <img src="assets/img/certs/techarion-thumb.webp" alt="" width="520" height="671"
-                                loading="lazy">
-                            <span class="cert-name">UI/UX design internship</span>
-                            <span class="cert-issuer">Tech Arion, 2023</span>
-                        </button></li>
-                    <li><button type="button" class="cert" data-full="assets/img/certs/smartbridge.webp">
-                            <img src="assets/img/certs/smartbridge-thumb.webp" alt="" width="520" height="752"
-                                loading="lazy">
-                            <span class="cert-name">Machine learning internship</span>
-                            <span class="cert-issuer">SmartBridge, 2022</span>
-                        </button></li>
-                    <li><button type="button" class="cert" data-full="assets/img/certs/udemy-python.webp">
-                            <img src="assets/img/certs/udemy-python-thumb.webp" alt="" width="520" height="387"
-                                loading="lazy">
-                            <span class="cert-name">Complete Python Bootcamp</span>
-                            <span class="cert-issuer">Udemy</span>
-                        </button></li>
-                    <li><button type="button" class="cert" data-full="assets/img/certs/hackerrank-python.webp">
-                            <img src="assets/img/certs/hackerrank-python-thumb.webp" alt="" width="520"
-                                height="398" loading="lazy">
-                            <span class="cert-name">Python (Basic)</span>
-                            <span class="cert-issuer">HackerRank, 2022</span>
-                        </button></li>
-                    <li><button type="button" class="cert" data-full="assets/img/certs/accenture.webp">
-                            <img src="assets/img/certs/accenture-thumb.webp" alt="" width="520" height="368"
-                                loading="lazy">
-                            <span class="cert-name">Consultant virtual experience</span>
-                            <span class="cert-issuer">Accenture</span>
-                        </button></li>
-                    <li><button type="button" class="cert" data-full="assets/img/certs/robogen-3d-printing.webp">
-                            <img src="assets/img/certs/robogen-3d-printing-thumb.webp" alt="" width="520"
-                                height="372" loading="lazy">
-                            <span class="cert-name">3D printing workshop</span>
-                            <span class="cert-issuer">RoboGEN, 2022</span>
-                        </button></li>
-                    <li><button type="button" class="cert" data-full="assets/img/certs/cad-mania-merit.webp">
-                            <img src="assets/img/certs/cad-mania-merit-thumb.webp" alt="" width="520" height="370"
-                                loading="lazy">
-                            <span class="cert-name">CAD Mania, third prize</span>
-                            <span class="cert-issuer">Gudlavalleru Engineering College</span>
-                        </button></li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- Contact -->
-        <section class="section section-contact" id="contact" aria-labelledby="contact-title">
-            <div class="wrap">
-                <h2 id="contact-title">Hiring, or have a project in mind?</h2>
-                <p class="contact-lead">Email me. I usually reply within a day.</p>
-                <div class="email-row">
-                    <a class="email-link" href="mailto:sathvikrinny@gmail.com">sathvikrinny@gmail.com</a>
-                    <button type="button" class="button button-line copy-email"
-                        data-email="sathvikrinny@gmail.com">Copy email</button>
-                    <span class="copy-status" role="status" aria-live="polite"></span>
-                </div>
-                <ul class="elsewhere">
-                    <li><a href="https://www.linkedin.com/in/sathvik-raju/">LinkedIn</a></li>
-                    <li><a href="https://github.com/SathvikRinny">GitHub</a></li>
-                    <li><a href="resume.html">Resume (printable)</a></li>
-                </ul>
-            </div>
-        </section>
-    </main>
-
-    <footer class="site-footer">
-        <div class="wrap footer-inner">
-            <p>© <span id="year">2026</span> Sathvik Raju Pothureddy</p>
-            <p>Built by hand with HTML, CSS and JavaScript.</p>
         </div>
-    </footer>
+    </section>
 
-    <dialog class="viewer" id="viewer" aria-label="Image viewer">
-        <form method="dialog" class="viewer-bar">
-            <p class="viewer-title" id="viewer-title"></p>
-            <button class="viewer-close" value="close">Close</button>
-        </form>
-        <img id="viewer-img" src="" alt="">
-        <div class="viewer-nav">
-            <button type="button" class="key" data-step="-1">Previous</button>
-            <span id="viewer-count"></span>
-            <button type="button" class="key" data-step="1">Next</button>
+    <section class="tech" id="tech" data-scene="tech" aria-labelledby="tech-title">
+        <header>
+            <h2 id="tech-title">My tech stack</h2>
+            <p>Push the balls around with your mouse or finger.</p>
+        </header>
+        <canvas id="balls" aria-label="Bouncing balls labelled JavaScript, Python, Node.js, Electron, Flask, SQL and more"></canvas>
+    </section>
+
+    <section class="scene side-left" id="contact" data-scene="contact" aria-labelledby="contact-title">
+        <div class="scene-inner">
+            <div class="copy">
+                <h2 id="contact-title">Tell me about your project</h2>
+                <p>Send a few lines about what you need. I’ll reply within a day.</p>
+                <span class="email" id="email">sathvikrinny@gmail.com</span>
+                <div class="buttons"><button class="btn btn-gold" type="button" id="copy">Copy email</button></div>
+                <p class="copied" id="copied" role="status"></p>
+            </div>
         </div>
-    </dialog>
+    </section>
+</main>
+<footer>Experimental 3D version of my portfolio. The figure is a free placeholder (CC0, by Quaternius / Don McCurdy) until my own 3D character is ready. <a href="index-classic.html">View the standard version</a></footer>
 
-    <script src="assets/js/main.js"></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "./assets/vendor/three/three.module.js"
+  }
+}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from './assets/vendor/three/GLTFLoader.js';
+
+(function () {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isPhone = () => window.innerWidth <= 760;
+
+    /* ---------------- Rotating word ---------------- */
+    const words = Array.from(document.querySelectorAll('.swap span'));
+    let wi = 0;
+    if (!reduce) setInterval(() => {
+        const cur = words[wi]; wi = (wi + 1) % words.length; const nxt = words[wi];
+        cur.classList.remove('in'); cur.classList.add('out');
+        nxt.classList.remove('out'); nxt.classList.add('in');
+        setTimeout(() => cur.classList.remove('out'), 650);
+    }, 2200);
+
+    /* ---------------- Cursor glow ---------------- */
+    const dot = document.getElementById('dot');
+    const mouse = { x: 0, y: 0, nx: 0, ny: 0 };
+    window.addEventListener('pointermove', e => {
+        mouse.x = e.clientX; mouse.y = e.clientY;
+        mouse.nx = (e.clientX / window.innerWidth) * 2 - 1;
+        mouse.ny = -(e.clientY / window.innerHeight) * 2 + 1;
+        if (e.pointerType === 'mouse') { dot.classList.add('on'); dot.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`; }
+    }, { passive: true });
+
+    /* ---------------- Stage ---------------- */
+    const canvas = document.getElementById('stage');
+    let renderer;
+    try {
+        renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    } catch (err) {
+        document.getElementById('loading').innerHTML = '<div><b>3D could not start</b>Your browser or device does not support WebGL. Try a different browser.</div>';
+        return;
+    }
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
+
+    scene.add(new THREE.HemisphereLight(0xc8d4ff, 0x0b1020, 1.1));
+    const key = new THREE.DirectionalLight(0xffffff, 1.7); key.position.set(3, 6, 6); scene.add(key);
+    const goldLight = new THREE.PointLight(0xffc857, 2.2, 14); goldLight.position.set(-2.5, 3.5, 3); scene.add(goldLight);
+    const rim = new THREE.DirectionalLight(0x6e8bff, 2.0); rim.position.set(-4, 3, -5); scene.add(rim);
+
+    // Soft glowing floor disc that follows the figure
+    function radialTexture(inner, outer) {
+        const c = document.createElement('canvas'); c.width = c.height = 256;
+        const g = c.getContext('2d'); const grd = g.createRadialGradient(128, 128, 0, 128, 128, 128);
+        grd.addColorStop(0, inner); grd.addColorStop(1, outer); g.fillStyle = grd; g.fillRect(0, 0, 256, 256);
+        return new THREE.CanvasTexture(c);
+    }
+    const floor = new THREE.Mesh(new THREE.CircleGeometry(1.6, 48),
+        new THREE.MeshBasicMaterial({ map: radialTexture('rgba(110,139,255,0.55)', 'rgba(110,139,255,0)'), transparent: true, depthWrite: false }));
+    floor.rotation.x = -Math.PI / 2; scene.add(floor);
+
+    /* Desk scene for "What I build" */
+    const desk = new THREE.Group();
+    const deskMat = new THREE.MeshStandardMaterial({ color: 0xf2f0ea, roughness: .6 });
+    const darkMat = new THREE.MeshStandardMaterial({ color: 0x1b2340, roughness: .5, metalness: .2 });
+    const top = new THREE.Mesh(new THREE.BoxGeometry(1.5, .06, .8), deskMat); top.position.set(.9, .86, 0); desk.add(top);
+    [[.25, .35], [.25, -.35], [1.55, .35], [1.55, -.35]].forEach(([x, z]) => {
+        const leg = new THREE.Mesh(new THREE.BoxGeometry(.05, .84, .05), deskMat); leg.position.set(x, .42, z); desk.add(leg);
+    });
+    const codeCanvas = document.createElement('canvas'); codeCanvas.width = 512; codeCanvas.height = 320;
+    const codeTex = new THREE.CanvasTexture(codeCanvas); codeTex.encoding = THREE.sRGBEncoding;
+    const screen = new THREE.Mesh(new THREE.PlaneGeometry(.95, .6), new THREE.MeshBasicMaterial({ map: codeTex, toneMapped: false }));
+    const bezel = new THREE.Mesh(new THREE.BoxGeometry(1.02, .67, .04), darkMat);
+    const monitor = new THREE.Group(); monitor.add(bezel); screen.position.z = .021; monitor.add(screen);
+    monitor.position.set(1.25, 1.33, 0); monitor.rotation.y = -Math.PI / 2; desk.add(monitor);
+    const stand = new THREE.Mesh(new THREE.BoxGeometry(.06, .2, .06), darkMat); stand.position.set(1.28, .98, 0); desk.add(stand);
+    const screenGlow = new THREE.PointLight(0x6e8bff, 1.6, 3); screenGlow.position.set(1.0, 1.35, 0); desk.add(screenGlow);
+    const chairSeat = new THREE.Mesh(new THREE.BoxGeometry(.55, .06, .55), darkMat); chairSeat.position.set(0, .52, 0); desk.add(chairSeat);
+    const chairBack = new THREE.Mesh(new THREE.BoxGeometry(.06, .6, .5), darkMat); chairBack.position.set(-.3, .85, 0); desk.add(chairBack);
+    const chairLeg = new THREE.Mesh(new THREE.CylinderGeometry(.04, .04, .5), darkMat); chairLeg.position.set(0, .26, 0); desk.add(chairLeg);
+    desk.visible = false; scene.add(desk);
+
+    const codeLines = Array.from({ length: 40 }, () => ({ indent: Math.floor(Math.random() * 4), w: 60 + Math.random() * 240, c: ['#FFC857', '#6E8BFF', '#F5F2EA', '#7FD1AE'][Math.floor(Math.random() * 4)] }));
+    let codeScroll = 0;
+    function drawCode(dt) {
+        codeScroll += dt * 28;
+        const g = codeCanvas.getContext('2d');
+        g.fillStyle = '#0B1228'; g.fillRect(0, 0, 512, 320);
+        for (let i = 0; i < 24; i++) {
+            const line = codeLines[(i + Math.floor(codeScroll / 16)) % codeLines.length];
+            const y = 20 + i * 16 - (codeScroll % 16);
+            g.fillStyle = 'rgba(167,175,198,.35)'; g.fillRect(14, y, 18, 6);
+            g.fillStyle = line.c; g.globalAlpha = .85; g.fillRect(44 + line.indent * 22, y, line.w, 6); g.globalAlpha = 1;
+        }
+        codeTex.needsUpdate = true;
+    }
+
+    /* ---------------- Figure ---------------- */
+    let mixer = null, actions = {}, current = null, headBone = null;
+    const holder = new THREE.Group(); scene.add(holder);
+    const look = { x: 0, y: 0 };
+
+    const SCENES = {
+        // then: undefined = loop forever, 'hold' = play once and stay, a clip name = play once then loop that clip
+        hero:    { x: 1.75, y: 0, ry: -0.35, anim: 'Wave', then: 'Idle', spot: '70%' },
+        about:   { x: -1.85, y: 0, ry: 0.45, anim: 'Yes', then: 'Idle', spot: '30%' },
+        desk:    { x: 1.2, y: 0, ry: Math.PI / 2, anim: 'Sitting', then: 'hold', spot: '72%', desk: true },
+        work:    { x: 0, y: -5, ry: 0, anim: 'Idle', spot: '50%' },
+        process: { x: -1.9, y: 0, ry: 0.5, anim: 'Idle', spot: '30%' },
+        tech:    { x: 0, y: -5, ry: 0, anim: 'Idle', spot: '50%' },
+        contact: { x: 1.75, y: 0, ry: -0.3, anim: 'ThumbsUp', then: 'Idle', spot: '70%' },
+    };
+    let active = 'hero';
+    const target = { x: SCENES.hero.x, y: 0, ry: SCENES.hero.ry };
+    const state = { x: target.x, y: 0, ry: target.ry };
+
+    function play(name, then) {
+        if (!mixer || !actions[name]) return;
+        const next = actions[name];
+        if (next === current && then === undefined) return;   // already looping this clip
+        const once = then !== undefined;
+        next.reset();
+        next.setLoop(once ? THREE.LoopOnce : THREE.LoopRepeat, Infinity);
+        next.clampWhenFinished = once;
+        next._then = then === 'hold' ? null : then;
+        if (current && current !== next) current.fadeOut(.35);
+        next.fadeIn(.35).play();
+        current = next;
+    }
+
+    new GLTFLoader().load('assets/models/robot.glb', gltf => {
+        const robot = gltf.scene;
+        const box = new THREE.Box3().setFromObject(robot);
+        const h = box.max.y - box.min.y;
+        robot.scale.setScalar(2.2 / h);
+        robot.traverse(o => {
+            if (o.isMesh) { o.frustumCulled = false; }
+            if (o.isBone && o.name === 'Head') headBone = o;
+        });
+        holder.add(robot);
+        mixer = new THREE.AnimationMixer(robot);
+        gltf.animations.forEach(clip => { actions[clip.name] = mixer.clipAction(clip); });
+        mixer.addEventListener('finished', e => {
+            const a = e.action;
+            if (a === current && a._then) play(a._then);
+        });
+        play('Idle');
+        setScene(active, true);
+        document.getElementById('loading').classList.add('done');
+    }, undefined, (err) => {
+        console.error('GLTF load error:', err);
+        document.getElementById('loading').innerHTML = '<div><b>3D figure did not load</b>Check your connection and refresh. The rest of the page still works — scroll down.</div>';
+    });
+
+    function setScene(name, force) {
+        if (name === active && !force) return;
+        active = name;
+        const s = SCENES[name];
+        const phone = isPhone();
+        target.x = phone ? (s.desk ? -0.15 : 0) : s.x;
+        target.y = s.y;
+        target.ry = s.ry;
+        desk.visible = !!s.desk;
+        document.getElementById('spot').style.setProperty('--spot-x', phone ? '50%' : s.spot);
+        if (s.anim && mixer) play(s.anim, s.then);
+        document.querySelectorAll('.top nav a').forEach(a => {
+            const id = a.getAttribute('href').slice(1);
+            const match = (name === 'desk' && id === 'services') || id === name;
+            if (match) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+        });
+    }
+
+    const sceneEls = Array.from(document.querySelectorAll('[data-scene]'));
+    function pickScene() {
+        const mid = window.innerHeight * 0.5;
+        let best = sceneEls[0];
+        for (const el of sceneEls) {
+            const r = el.getBoundingClientRect();
+            if (r.top <= mid && r.bottom >= mid) { best = el; break; }
+        }
+        setScene(best.dataset.scene);
+    }
+
+    function resize() {
+        const w = window.innerWidth, h = window.innerHeight;
+        renderer.setSize(w, h, false);
+        camera.aspect = w / h;
+        // Phones: a smaller figure in the top part of the screen, above the text panel.
+        if (isPhone()) { camera.fov = 40; camera.position.set(0, 1.2, 8.4); camera.lookAt(0, -0.7, 0); holder.scale.setScalar(.8); desk.scale.setScalar(.8); floor.scale.setScalar(.8); }
+        else { camera.fov = 32; camera.position.set(0, 1.6, 9); camera.lookAt(0, 1.15, 0); holder.scale.setScalar(1); desk.scale.setScalar(1); floor.scale.setScalar(1); }
+        camera.updateProjectionMatrix();
+        setScene(active, true);
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    /* ---------------- Work gallery: vertical scroll moves the cards sideways ---------------- */
+    const work = document.getElementById('work');
+    const track = document.getElementById('track');
+    function moveTrack() {
+        if (isPhone()) { track.style.transform = ''; return; }
+        const r = work.getBoundingClientRect();
+        const total = work.offsetHeight - window.innerHeight;
+        const p = Math.min(1, Math.max(0, -r.top / total));
+        const maxShift = Math.max(0, track.scrollWidth - window.innerWidth + 40);
+        track.style.transform = `translateX(${-p * maxShift}px)`;
+    }
+
+    /* ---------------- Process: glowing line fills as you scroll ---------------- */
+    const steps = document.getElementById('steps');
+    const stepItems = Array.from(steps.children);
+    function fillSteps() {
+        const r = steps.getBoundingClientRect();
+        const p = Math.min(1, Math.max(0, (window.innerHeight * 0.65 - r.top) / r.height));
+        steps.style.setProperty('--fill', p.toFixed(3));
+        stepItems.forEach((li, i) => li.classList.toggle('lit', p >= i / stepItems.length + 0.02));
+    }
+
+    window.addEventListener('scroll', () => { pickScene(); moveTrack(); fillSteps(); }, { passive: true });
+    pickScene(); moveTrack(); fillSteps();
+
+    /* ---------------- Render loop ---------------- */
+    const clock = new THREE.Clock();
+    function loop() {
+        const dt = Math.min(clock.getDelta(), .05);
+        const k = 1 - Math.pow(0.002, dt);  // smooth follow
+        state.x += (target.x - state.x) * k;
+        state.y += (target.y - state.y) * k;
+        state.ry += (target.ry - state.ry) * k;
+        holder.position.set(state.x, state.y, 0);
+        holder.rotation.y = state.ry;
+        floor.position.set(state.x, state.y + .01, 0);
+        floor.visible = state.y > -2;
+        desk.position.set(state.x, state.y, 0);
+        desk.rotation.y = state.ry - Math.PI / 2;
+        // Head follows the pointer: remove last frame's offset, let the animation pose the head, then add a fresh offset.
+        if (headBone) { headBone.rotation.y -= look.y; headBone.rotation.x -= look.x; }
+        if (mixer) mixer.update(dt);
+        if (headBone) {
+            const want = (!reduce && active !== 'desk')
+                ? { y: THREE.MathUtils.clamp(mouse.nx * 0.6 - state.ry * 0.4, -0.6, 0.6), x: THREE.MathUtils.clamp(-mouse.ny * 0.3, -0.3, 0.3) }
+                : { y: 0, x: 0 };
+            look.y += (want.y - look.y) * k; look.x += (want.x - look.x) * k;
+            headBone.rotation.y += look.y; headBone.rotation.x += look.x;
+        }
+        if (desk.visible) drawCode(dt);
+        renderer.render(scene, camera);
+        requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+
+    /* ---------------- Tech stack balls ---------------- */
+    const ballsCanvas = document.getElementById('balls');
+    const bRenderer = new THREE.WebGLRenderer({ canvas: ballsCanvas, antialias: true, alpha: true });
+    bRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    bRenderer.outputEncoding = THREE.sRGBEncoding;
+    const bScene = new THREE.Scene();
+    const bCam = new THREE.PerspectiveCamera(35, 1, .1, 100);
+    bScene.add(new THREE.HemisphereLight(0xffffff, 0x1b2340, 1.2));
+    const bKey = new THREE.DirectionalLight(0xffffff, 1.4); bKey.position.set(2, 5, 6); bScene.add(bKey);
+    const bGold = new THREE.PointLight(0xffc857, 1.5, 20); bGold.position.set(-4, 4, 4); bScene.add(bGold);
+
+    const TECH = [
+        ['JavaScript', '#F7DF1E', '#111'], ['Python', '#3776AB', '#FFD43B'], ['Node.js', '#3C873A', '#fff'],
+        ['Electron', '#2B2E3A', '#9FEAF9'], ['Flask', '#F5F2EA', '#111'], ['SQL', '#E38C00', '#fff'],
+        ['HTML', '#E34F26', '#fff'], ['CSS', '#1572B6', '#fff'], ['Express', '#ffffff', '#111'],
+        ['pandas', '#150458', '#E70488'], ['scikit-learn', '#F7931E', '#fff'], ['Git', '#F05032', '#fff'],
+        ['Figma', '#1E1E1E', '#A259FF'],
+    ];
+    function labelTexture(text, bg, fg) {
+        const c = document.createElement('canvas'); c.width = 512; c.height = 256;
+        const g = c.getContext('2d');
+        g.fillStyle = bg; g.fillRect(0, 0, 512, 256);
+        g.fillStyle = fg; g.textAlign = 'center'; g.textBaseline = 'middle';
+        const size = text.length > 8 ? 34 : 44;
+        g.font = `800 ${size}px Archivo, system-ui, sans-serif`;
+        g.fillText(text, 128, 128); g.fillText(text, 384, 128);
+        const t = new THREE.CanvasTexture(c); t.encoding = THREE.sRGBEncoding; return t;
+    }
+
+    const balls = [];
+    let bounds = { w: 4, h: 3 };
+    TECH.forEach(([name, bg, fg], i) => {
+        const r = .42 + (i % 3) * .06;
+        const mesh = new THREE.Mesh(new THREE.SphereGeometry(r, 40, 28),
+            new THREE.MeshStandardMaterial({ map: labelTexture(name, bg, fg), roughness: .35, metalness: .05 }));
+        bScene.add(mesh);
+        balls.push({ mesh, r, p: new THREE.Vector3(), v: new THREE.Vector3() });
+    });
+
+    function dropBalls() {
+        balls.forEach((b, i) => {
+            b.p.set((Math.random() * 2 - 1) * (bounds.w - b.r), bounds.h + 1 + i * .6, (Math.random() - .5) * .6);
+            b.v.set((Math.random() - .5) * 2, 0, 0);
+        });
+    }
+
+    function bResize() {
+        const w = ballsCanvas.clientWidth, h = ballsCanvas.clientHeight;
+        bRenderer.setSize(w, h, false);
+        bCam.aspect = w / h; bCam.position.set(0, 2, 11); bCam.lookAt(0, 2, 0); bCam.updateProjectionMatrix();
+        const halfH = Math.tan(THREE.MathUtils.degToRad(bCam.fov / 2)) * 11;
+        bounds = { w: halfH * bCam.aspect * .92, h: 2 + halfH * .9, floor: 2 - halfH * .92 };
+    }
+    window.addEventListener('resize', bResize);
+    bResize(); dropBalls();
+
+    const pointer3 = new THREE.Vector3(999, 999, 0); let pointerActive = false;
+    const ray = new THREE.Raycaster(); const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+    ballsCanvas.addEventListener('pointermove', e => {
+        const r = ballsCanvas.getBoundingClientRect();
+        const ndc = new THREE.Vector2(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+        ray.setFromCamera(ndc, bCam); ray.ray.intersectPlane(plane, pointer3); pointerActive = true;
+    });
+    ballsCanvas.addEventListener('pointerleave', () => { pointerActive = false; });
+
+    let ballsVisible = false, dropped = false;
+    new IntersectionObserver(es => {
+        ballsVisible = es[0].isIntersecting;
+        if (ballsVisible && !dropped) { dropped = true; dropBalls(); }
+    }, { threshold: .25 }).observe(ballsCanvas);
+
+    const tmp = new THREE.Vector3();
+    function stepBalls(dt) {
+        const g = -9.8, e = .55;
+        balls.forEach(b => {
+            b.v.y += g * dt;
+            if (pointerActive) {
+                tmp.subVectors(b.p, pointer3); tmp.z = 0; const d = tmp.length();
+                if (d < 1.3) b.v.addScaledVector(tmp.normalize(), (1.3 - d) * 22 * dt * 10);
+            }
+            b.p.addScaledVector(b.v, dt);
+            if (b.p.y - b.r < bounds.floor) { b.p.y = bounds.floor + b.r; b.v.y *= -e; b.v.x *= .985; }
+            if (b.p.x - b.r < -bounds.w) { b.p.x = -bounds.w + b.r; b.v.x *= -e; }
+            if (b.p.x + b.r > bounds.w) { b.p.x = bounds.w - b.r; b.v.x *= -e; }
+            if (Math.abs(b.p.z) > .4) { b.p.z = Math.sign(b.p.z) * .4; b.v.z *= -e; }
+        });
+        for (let i = 0; i < balls.length; i++) for (let j = i + 1; j < balls.length; j++) {
+            const a = balls[i], c = balls[j];
+            tmp.subVectors(c.p, a.p); const d = tmp.length(), min = a.r + c.r;
+            if (d > 0 && d < min) {
+                const n = tmp.divideScalar(d); const push = (min - d) / 2;
+                a.p.addScaledVector(n, -push); c.p.addScaledVector(n, push);
+                const rel = c.v.clone().sub(a.v).dot(n);
+                if (rel < 0) { const imp = -(1 + e) * rel / 2; a.v.addScaledVector(n, -imp); c.v.addScaledVector(n, imp); }
+            }
+        }
+        balls.forEach(b => {
+            b.mesh.position.copy(b.p);
+            b.mesh.rotation.z -= b.v.x * dt / b.r;
+            b.mesh.rotation.x += b.v.z * dt / b.r;
+        });
+    }
+
+    const bClock = new THREE.Clock();
+    (function bLoop() {
+        const dt = Math.min(bClock.getDelta(), .033);
+        if (ballsVisible) {
+            for (let s = 0; s < 3; s++) stepBalls(dt / 3);
+            bRenderer.render(bScene, bCam);
+        }
+        requestAnimationFrame(bLoop);
+    })();
+
+    /* ---------------- Copy email ---------------- */
+    document.getElementById('copy').addEventListener('click', async () => {
+        const out = document.getElementById('copied');
+        try { await navigator.clipboard.writeText('sathvikrinny@gmail.com'); out.textContent = 'Email address copied.'; }
+        catch { const r = document.createRange(); r.selectNodeContents(document.getElementById('email')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); out.textContent = 'Press Ctrl+C or Cmd+C to copy the selected address.'; }
+    });
+
+    document.getElementById('year') && (document.getElementById('year').textContent = new Date().getFullYear());
+})();
+</script>
 </body>
-
 </html>
