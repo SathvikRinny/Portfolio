@@ -107,7 +107,9 @@
     }
     .brand { font-weight: 750; font-variation-settings: var(--wide); color: var(--text); text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; }
     .brand span { color: var(--accent); }
-    .top nav { display: flex; gap: 2px; }
+    .top nav { display: flex; gap: 2px; margin-left: auto; margin-right: 12px; }
+    .top { transition: background-color .25s, border-color .25s; border-bottom: 1px solid transparent; }
+    @media (min-aspect-ratio: 9/10) { .top.scrolled { background: color-mix(in srgb, var(--night) 88%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom-color: var(--line); } }
     .top nav a { color: var(--soft); text-decoration: none; font-size: .92rem; min-height: 44px; display: inline-flex; align-items: center; padding: 0 10px; }
     .top nav a:hover, .top nav a[aria-current="true"] { color: var(--text); }
     .top-actions { display: flex; align-items: center; gap: 8px; }
@@ -132,18 +134,21 @@
 
     .scene {
         position: relative;
-        min-height: 100svh;
+        min-height: 88svh;
         display: grid;
         align-items: center;
-        padding: clamp(76px, 12vh, 96px) max(20px, env(safe-area-inset-right, 0px)) clamp(24px, 8vh, 64px) max(20px, env(safe-area-inset-left, 0px));
+        padding: clamp(90px, 14vh, 140px) max(20px, env(safe-area-inset-right, 0px)) clamp(24px, 8vh, 64px) max(20px, env(safe-area-inset-left, 0px));
     }
+    .scene-hero { min-height: 100svh; }
     .scene-inner { width: 100%; max-width: 1180px; margin-inline: auto; display: grid; }
     .copy { display: grid; gap: 18px; max-width: 520px; }
     .side-left .copy { justify-self: start; }
     .side-right .copy { justify-self: end; }
 
     .kicker { color: var(--accent); font-weight: 600; }
-    .big { font-size: clamp(2rem, min(0.6rem + 6.4vw, 0.8rem + 9.5vh), 5.4rem); font-variation-settings: var(--wide); letter-spacing: -0.025em; font-weight: 800; }
+    #hero .copy { max-width: 640px; }
+    .copy > .lead-line { color: var(--text); max-width: none; font-size: clamp(1.4rem, min(.9rem + 2vw, .9rem + 3.2vh), 2.5rem); font-weight: 750; font-variation-settings: var(--wide); letter-spacing: -0.015em; line-height: 1.1; }
+    .big { font-size: clamp(2rem, min(0.5rem + 4.9vw, 0.7rem + 7.6vh), 4.6rem); font-variation-settings: var(--wide); letter-spacing: -0.025em; font-weight: 800; }
     h2 { font-size: clamp(1.7rem, min(1rem + 3.4vw, 1rem + 6vh), 3.8rem); font-variation-settings: var(--wide); letter-spacing: -0.02em; }
     .copy > p { color: var(--soft); font-size: clamp(1rem, .9rem + .4vw, 1.15rem); max-width: 46ch; }
 
@@ -168,7 +173,7 @@
     .services span { color: var(--soft); }
 
     /* ---------- Work: a swipeable row on touch, small or short screens; pinned to scroll on large mouse screens ---------- */
-    .work { position: relative; padding-block: clamp(76px, 12vh, 110px) 32px; }
+    .work { position: relative; display: grid; align-content: center; min-height: 88svh; padding-block: clamp(90px, 14vh, 140px) 32px; }
     .work-pin { display: grid; align-content: center; gap: clamp(14px, 3vh, 28px); }
     .work-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 20px; padding-inline: max(20px, env(safe-area-inset-left, 0px)); max-width: 1180px; width: 100%; margin-inline: auto; }
     .swipe-hint { color: var(--soft); font-size: .92rem; }
@@ -196,12 +201,14 @@
     .card-next { place-content: center; text-align: center; min-height: min(360px, 55svh); border-style: dashed; }
     .card-next h3 { font-size: 2rem; }
 
-    @media (hover: hover) and (pointer: fine) and (min-height: 600px) and (min-aspect-ratio: 9/10) {
-        .work { height: 320vh; padding-block: 0; }
-        .work-pin { position: sticky; top: 0; height: 100svh; overflow: hidden; }
-        .track { overflow: visible; scroll-snap-type: none; will-change: transform; gap: 28px; }
+    @media (min-width: 900px) and (min-aspect-ratio: 9/10) {
+        .track { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); overflow: visible; scroll-snap-type: none; max-width: 1180px; margin-inline: auto; padding-inline: max(20px, env(safe-area-inset-left, 0px)); gap: 24px; }
+        .card { flex: none; }
         .swipe-hint { display: none; }
     }
+    .card-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; padding-top: 4px; }
+    .card-links .btn { min-height: 42px; padding: 0 18px; font-size: .92rem; }
+    .card { align-content: start; }
 
     /* ---------- Process timeline with glowing line ---------- */
     .steps { position: relative; margin: 8px 0 0; padding: 0 0 0 28px; list-style: none; display: grid; gap: 28px; }
@@ -222,16 +229,19 @@
     .steps p { color: var(--soft); }
 
     /* ---------- Tech stack balls ---------- */
-    .tech { min-height: 100svh; display: grid; grid-template-rows: auto 1fr; padding-top: clamp(76px, 12vh, 96px); }
+    .tech { display: grid; grid-template-rows: auto 1fr; align-content: center; min-height: 88svh; padding-bottom: 24px; padding-top: clamp(90px, 14vh, 140px); }
     .tech header { padding-inline: max(20px, env(safe-area-inset-left, 0px)); text-align: center; display: grid; gap: 10px; }
     .tech header p { color: var(--soft); }
-    #balls { width: 100%; height: clamp(300px, 62svh, 620px); display: block; touch-action: pan-y; }
+    #balls { width: 100%; height: clamp(280px, 46svh, 460px); display: block; touch-action: pan-y; }
 
     /* ---------- Contact ---------- */
     #contact .copy { max-width: 680px; }
     .email { font-size: clamp(1.1rem, .55rem + 2.3vw, 2.4rem); font-weight: 800; font-variation-settings: var(--wide); color: var(--accent); white-space: nowrap; }
     @media (max-width: 420px) { .email { white-space: normal; overflow-wrap: anywhere; } }
     .copied { color: var(--soft); min-height: 1.4em; }
+    .elsewhere { display: flex; gap: 6px 26px; margin: 0; padding: 0; list-style: none; }
+    .elsewhere a { display: inline-flex; align-items: center; min-height: 44px; color: var(--text); font-weight: 600; text-underline-offset: .2em; }
+    .elsewhere a:hover { color: var(--accent); }
     footer { position: relative; z-index: 1; padding: 24px max(20px, env(safe-area-inset-left, 0px)); color: var(--soft); font-size: .85rem; text-align: center; border-top: 1px solid var(--line); }
     footer a { color: var(--soft); }
 
@@ -272,6 +282,8 @@
             transition: height .45s cubic-bezier(.3, .8, .2, 1);
         }
         [data-mobile="a"] main { padding-top: calc(44svh + 6px); }
+        :root[data-mobile="a"] { scroll-padding-top: calc(30svh + 4px); }
+        :root[data-mobile="b"] { scroll-padding-top: 72px; }
         [data-mobile="a"] .top { background: none; }
 
         [data-mobile="b"] #stage {
@@ -331,14 +343,13 @@
 </header>
 
 <main id="main">
-    <section class="scene side-left" id="hero" data-scene="hero" aria-labelledby="hero-title">
+    <section class="scene scene-hero side-left" id="hero" data-scene="hero" aria-labelledby="hero-title">
         <div class="scene-inner">
             <div class="copy">
                 <div class="hero-slot" aria-hidden="true"></div>
-                <p class="kicker">Sathvik Raju Pothureddy</p>
-                <h1 class="big" id="hero-title">I build
-                    <span class="swap" aria-live="polite"><span class="in">websites</span><span>web apps</span><span>desktop apps</span><span>AI tools</span></span>
-                </h1>
+                <p class="kicker">Hi, I’m</p>
+                <h1 class="big" id="hero-title">Sathvik Raju Pothureddy</h1>
+                <p class="lead-line">I build <span class="swap" aria-live="polite"><span class="in">websites</span><span>web apps</span><span>desktop apps</span><span>AI tools</span></span></p>
                 <p>Freelance software developer for businesses and churches. Based in Gudivada, India, working with
                     clients anywhere.</p>
                 <div class="buttons"><a class="btn btn-accent" href="#contact">Get a quote</a><a class="btn" href="#work">See my work</a></div>
@@ -349,7 +360,7 @@
     <section class="scene side-right" id="about" data-scene="about" aria-labelledby="about-title">
         <div class="scene-inner">
             <div class="copy">
-                <h2 id="about-title">Hi, I’m Sathvik</h2>
+                <h2 id="about-title">Engineer turned developer</h2>
                 <p>I started out as a mechanical engineer and now build software. I plan before I build, test before I
                     ship, and work directly with you, with no agency in between.</p>
                 <p>I speak English, Telugu and Hindi.</p>
@@ -376,17 +387,19 @@
             <div class="work-head"><h2 id="work-title">My work</h2><p class="swipe-hint">Swipe to see more</p></div>
             <div class="track" id="track">
                 <article class="card">
-                    <img src="assets/img/projects/gloryboard.webp" alt="GloryBoard control window with song slides" width="960" height="600" loading="lazy">
+                    <img src="assets/img/projects/gloryboard.webp" alt="GloryBoard control window: song slides on the left, live text preview on the right" width="960" height="601" loading="lazy">
                     <span class="card-num">01</span>
                     <h3>GloryBoard</h3>
                     <p>Presentation software for church services: lyrics, Bible verses, video and a live camera on every
                         screen in the room.</p>
+                    <div class="card-links"><a class="btn btn-accent" href="#contact">Ask for a live demo</a></div>
                 </article>
                 <article class="card">
                     <img src="assets/img/projects/liver.webp" alt="Liver Health Check home page" width="960" height="600" loading="lazy">
                     <span class="card-num">02</span>
                     <h3>Liver Health Check</h3>
                     <p>An AI web app that estimates liver-disease risk from ten blood-test values.</p>
+                    <div class="card-links"><a class="btn" href="https://github.com/SathvikRinny/Liver_Paitent_Analysis_NexsuProject_3s" target="_blank" rel="noopener">View code</a></div>
                 </article>
                 <article class="card card-next">
                     <span class="card-num">03</span>
@@ -426,7 +439,14 @@
                 <h2 id="contact-title">Tell me about your project</h2>
                 <p>Send a few lines about what you need. I’ll reply within a day.</p>
                 <span class="email" id="email">sathvikrinny@gmail.com</span>
-                <div class="buttons"><button class="btn btn-accent" type="button" id="copy">Copy email</button></div>
+                <div class="buttons">
+                    <a class="btn btn-accent" href="mailto:sathvikrinny@gmail.com?subject=Project%20enquiry">Email me</a>
+                    <button class="btn" type="button" id="copy">Copy email</button>
+                </div>
+                <ul class="elsewhere">
+                    <li><a href="https://www.linkedin.com/in/sathvik-raju/" target="_blank" rel="noopener">LinkedIn</a></li>
+                    <li><a href="https://github.com/SathvikRinny" target="_blank" rel="noopener">GitHub</a></li>
+                </ul>
                 <p class="copied" id="copied" role="status"></p>
             </div>
         </div>
@@ -449,7 +469,6 @@ import { GLTFLoader } from './assets/vendor/three/GLTFLoader.min.js';
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     // Layout follows the screen's shape: tall screens stack the figure above the text.
     const stackedMQ = window.matchMedia('(max-aspect-ratio: 9/10)');
-    const pinnedMQ = window.matchMedia('(hover: hover) and (pointer: fine) and (min-height: 600px) and (min-aspect-ratio: 9/10)');
     const isStacked = () => stackedMQ.matches;
     const MODE = document.documentElement.dataset.mobile || 'a';
     // On tall screens the figure stays on stage in every section; these poses replace the hidden ones.
@@ -489,12 +508,17 @@ import { GLTFLoader } from './assets/vendor/three/GLTFLoader.min.js';
     /* ---------------- Cursor glow ---------------- */
     const dot = document.getElementById('dot');
     const mouse = { x: 0, y: 0, nx: 0, ny: 0 };
+    let dotTimer = null;
     window.addEventListener('pointermove', e => {
         mouse.x = e.clientX; mouse.y = e.clientY;
         mouse.nx = (e.clientX / window.innerWidth) * 2 - 1;
         mouse.ny = -(e.clientY / window.innerHeight) * 2 + 1;
-        if (e.pointerType === 'mouse') { dot.classList.add('on'); dot.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`; }
+        if (e.pointerType === 'mouse') {
+            dot.classList.add('on'); dot.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+            clearTimeout(dotTimer); dotTimer = setTimeout(() => dot.classList.remove('on'), 1200);
+        }
     }, { passive: true });
+    document.addEventListener('pointerleave', () => dot.classList.remove('on'));
 
     /* ---------------- Stage ---------------- */
     const canvas = document.getElementById('stage');
@@ -575,9 +599,9 @@ import { GLTFLoader } from './assets/vendor/three/GLTFLoader.min.js';
         about:   { x: -1.85, y: 0, ry: 0.45, anim: 'Yes', then: 'Idle', spot: '30%' },
         desk:    { x: 1.2, y: 0, ry: Math.PI / 2, anim: 'Sitting', then: 'hold', spot: '72%', desk: true },
         work:    { x: 0, y: -8, ry: 0, anim: 'Idle', spot: '50%' },
-        process: { x: -1.9, y: 0, ry: 0.5, anim: 'Idle', spot: '30%' },
+        process: { x: -1.9, y: 0, ry: 1.0, anim: 'Walking', spot: '30%' },
         tech:    { x: 0, y: -8, ry: 0, anim: 'Idle', spot: '50%' },
-        contact: { x: 1.75, y: 0, ry: -0.3, anim: 'ThumbsUp', then: 'Idle', spot: '70%' },
+        contact: { x: 1.75, y: 0, ry: -0.3, anim: 'ThumbsUp', then: 'Dance', spot: '70%' },
     };
     let active = 'hero';
     const target = { x: SCENES.hero.x, y: 0, ry: SCENES.hero.ry };
@@ -687,7 +711,7 @@ import { GLTFLoader } from './assets/vendor/three/GLTFLoader.min.js';
     function placeStage() {
         if (!isStacked()) return;
         if (MODE === 'a') {
-            document.documentElement.classList.toggle('compact', window.scrollY > window.innerHeight * 0.22);
+            document.documentElement.classList.toggle('compact', window.scrollY > 40);
             return;
         }
         const r = heroSlot.getBoundingClientRect();
@@ -703,18 +727,6 @@ import { GLTFLoader } from './assets/vendor/three/GLTFLoader.min.js';
         canvas.style.transform = `translate(${x}px, ${y}px) scale(${sc})`;
     }
 
-    /* ---------------- Work gallery: vertical scroll moves the cards sideways ---------------- */
-    const work = document.getElementById('work');
-    const track = document.getElementById('track');
-    function moveTrack() {
-        if (!pinnedMQ.matches) { track.style.transform = ''; return; }
-        const r = work.getBoundingClientRect();
-        const total = work.offsetHeight - window.innerHeight;
-        const p = Math.min(1, Math.max(0, -r.top / total));
-        const maxShift = Math.max(0, track.scrollWidth - window.innerWidth + 40);
-        track.style.transform = `translateX(${-p * maxShift}px)`;
-    }
-
     /* ---------------- Process: glowing line fills as you scroll ---------------- */
     const steps = document.getElementById('steps');
     const stepItems = Array.from(steps.children);
@@ -725,9 +737,11 @@ import { GLTFLoader } from './assets/vendor/three/GLTFLoader.min.js';
         stepItems.forEach((li, i) => li.classList.toggle('lit', p >= i / stepItems.length + 0.02));
     }
 
-    window.addEventListener('scroll', () => { pickScene(); moveTrack(); fillSteps(); placeStage(); }, { passive: true });
+    const topBar = document.querySelector('.top');
+    const markHeader = () => topBar.classList.toggle('scrolled', window.scrollY > 10);
+    window.addEventListener('scroll', () => { pickScene(); fillSteps(); placeStage(); markHeader(); }, { passive: true });
     window.addEventListener('resize', placeStage);
-    pickScene(); moveTrack(); fillSteps(); placeStage();
+    pickScene(); fillSteps(); placeStage(); markHeader();
 
     /* ---------------- Render loop ---------------- */
     const clock = new THREE.Clock();
@@ -786,9 +800,10 @@ import { GLTFLoader } from './assets/vendor/three/GLTFLoader.min.js';
         const g = c.getContext('2d');
         g.fillStyle = bg; g.fillRect(0, 0, 512, 256);
         g.fillStyle = fg; g.textAlign = 'center'; g.textBaseline = 'middle';
-        const size = text.length > 8 ? 34 : 44;
+        let size = 56;
         g.font = `800 ${size}px Archivo, system-ui, sans-serif`;
-        g.fillText(text, 128, 128); g.fillText(text, 384, 128);
+        while (g.measureText(text).width > 118 && size > 20) { size -= 2; g.font = `800 ${size}px Archivo, system-ui, sans-serif`; }
+        g.fillText(text, 128, 128);
         const t = new THREE.CanvasTexture(c); t.encoding = THREE.sRGBEncoding; return t;
     }
 
@@ -799,7 +814,7 @@ import { GLTFLoader } from './assets/vendor/three/GLTFLoader.min.js';
         const mesh = new THREE.Mesh(new THREE.SphereGeometry(r, 40, 28),
             new THREE.MeshStandardMaterial({ map: labelTexture(name, bg, fg), roughness: .35, metalness: .05 }));
         bScene.add(mesh);
-        balls.push({ mesh, r, p: new THREE.Vector3(), v: new THREE.Vector3() });
+        balls.push({ mesh, r, r0: r, p: new THREE.Vector3(), v: new THREE.Vector3() });
     });
 
     function dropBalls() {
@@ -815,6 +830,9 @@ import { GLTFLoader } from './assets/vendor/three/GLTFLoader.min.js';
         bCam.aspect = w / h; bCam.position.set(0, 2, 11); bCam.lookAt(0, 2, 0); bCam.updateProjectionMatrix();
         const halfH = Math.tan(THREE.MathUtils.degToRad(bCam.fov / 2)) * 11;
         bounds = { w: halfH * bCam.aspect * .92, h: 2 + halfH * .9, floor: 2 - halfH * .92 };
+        // Bigger balls on wide screens so they fill the area and the labels stay readable.
+        const f = THREE.MathUtils.clamp(bounds.w / 5.5, 0.85, 1.7);
+        balls.forEach(b => { b.r = b.r0 * f; b.mesh.scale.setScalar(f); });
     }
     window.addEventListener('resize', bResize);
     bResize(); dropBalls();
@@ -871,8 +889,8 @@ import { GLTFLoader } from './assets/vendor/three/GLTFLoader.min.js';
         }
         balls.forEach(b => {
             b.mesh.position.copy(b.p);
-            b.mesh.rotation.z -= b.v.x * dt / b.r;
-            b.mesh.rotation.x += b.v.z * dt / b.r;
+            // A gentle tilt instead of rolling, so the label always stays readable.
+            b.mesh.rotation.z = THREE.MathUtils.clamp(-b.v.x * 0.06, -0.35, 0.35);
         });
     }
 
