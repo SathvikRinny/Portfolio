@@ -14,20 +14,32 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
+<script>
+    try { const pal = new URLSearchParams(location.search).get('palette'); if (pal) document.documentElement.dataset.palette = pal; } catch (e) {}
+</script>
 <style>
-    /* Layout: a fixed 3D stage behind full-height scenes. Text sits on the side opposite the figure on desktop,
-       and at the bottom of each scene on phones. One committed dark "stage" look. */
+    /* Layout: a fixed 3D stage behind full-height scenes. Wide screens put text beside the figure; tall
+       screens (portrait phones, tablets) stack the figure above the text. Sizes are fluid (clamp, vw, svh). */
     :root {
-        --night: #070B18;
-        --panel: #0E1630;
-        --line: #26304F;
-        --text: #F5F2EA;
-        --soft: #A7AFC6;
-        --gold: #FFC857;
-        --cobalt: #6E8BFF;
+        /* Palette "dusk" (default). Compare others by adding ?palette=ocean or ?palette=ember to the link. */
+        --night: #120E1F;
+        --panel: #1C1630;
+        --line: #352B4F;
+        --text: #F7F2EC;
+        --soft: #C4BAD8;
+        --accent: #FF9E7A;
+        --accent-2: #A99BFF;
         --display: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
         --wide: "wdth" 125;
         color-scheme: dark;
+    }
+    :root[data-palette="ocean"] {
+        --night: #06181D; --panel: #0C262D; --line: #1D4049; --text: #EEF7F5; --soft: #A9C8C3;
+        --accent: #FFB454; --accent-2: #4FD1C5;
+    }
+    :root[data-palette="ember"] {
+        --night: #16100C; --panel: #231A14; --line: #3E2F25; --text: #F8F0E7; --soft: #D0BEAC;
+        --accent: #FF7A45; --accent-2: #6FD3B5;
     }
 
     * { box-sizing: border-box; }
@@ -43,13 +55,13 @@
     }
     h1, h2, h3 { margin: 0; line-height: 1.05; text-wrap: balance; }
     p { margin: 0; text-wrap: pretty; }
-    a { color: var(--gold); }
-    :focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+    a { color: var(--accent); }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 
     .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
     .skip-link {
         position: absolute; top: -60px; left: 16px; z-index: 50;
-        padding: 10px 16px; border-radius: 8px; background: var(--gold); color: var(--night);
+        padding: 10px 16px; border-radius: 8px; background: var(--accent); color: var(--night);
         font-weight: 700; text-decoration: none;
     }
     .skip-link:focus { top: 12px; }
@@ -64,8 +76,8 @@
     .spotlight {
         position: fixed; inset: 0; z-index: 0; pointer-events: none;
         background:
-            radial-gradient(60% 45% at var(--spot-x, 70%) 42%, rgba(255, 200, 87, .14), transparent 70%),
-            radial-gradient(40% 35% at var(--spot-x, 70%) 55%, rgba(110, 139, 255, .16), transparent 70%);
+            radial-gradient(60% 45% at var(--spot-x, 70%) 42%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%),
+            radial-gradient(40% 35% at var(--spot-x, 70%) 55%, color-mix(in srgb, var(--accent-2) 18%, transparent), transparent 70%);
     }
     .grain {
         position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .5;
@@ -94,12 +106,26 @@
         background: linear-gradient(var(--night), transparent);
     }
     .brand { font-weight: 750; font-variation-settings: var(--wide); color: var(--text); text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; }
-    .brand span { color: var(--gold); }
+    .brand span { color: var(--accent); }
     .top nav { display: flex; gap: 2px; }
     .top nav a { color: var(--soft); text-decoration: none; font-size: .92rem; min-height: 44px; display: inline-flex; align-items: center; padding: 0 10px; }
     .top nav a:hover, .top nav a[aria-current="true"] { color: var(--text); }
-    @media (max-width: 640px) { .top nav a:not(.cta) { display: none; } }
-    .cta { border: 1.5px solid var(--gold); border-radius: 999px; color: var(--gold) !important; padding: 0 16px !important; }
+    .top-actions { display: flex; align-items: center; gap: 8px; }
+    .cta { display: inline-flex; align-items: center; min-height: 44px; border: 1.5px solid var(--accent); border-radius: 999px; color: var(--accent); padding: 0 16px; text-decoration: none; font-size: .92rem; font-weight: 600; }
+    .menu-btn { display: none; min-height: 44px; padding: 0 16px; border: 1.5px solid var(--line); border-radius: 999px; background: transparent; color: var(--text); font: inherit; font-weight: 600; cursor: pointer; }
+    @media (max-width: 720px) {
+        .menu-btn { display: inline-flex; align-items: center; position: relative; z-index: 2; }
+        .brand, .cta { position: relative; z-index: 2; }
+        .top nav {
+            position: fixed; inset: 0; z-index: 1;
+            flex-direction: column; justify-content: center; gap: 4px;
+            padding: 24px max(28px, env(safe-area-inset-left, 0px));
+            background: var(--night);
+            opacity: 0; visibility: hidden; transition: opacity .25s, visibility 0s .25s;
+        }
+        .top nav.open { opacity: 1; visibility: visible; transition: opacity .25s; }
+        .top nav a { min-height: 60px; font-size: clamp(1.7rem, 8vw, 2.4rem); font-weight: 700; font-variation-settings: var(--wide); color: var(--text); border-bottom: 1px solid var(--line); padding: 0; }
+    }
 
     /* ---------- Scenes ---------- */
     main { position: relative; z-index: 1; }
@@ -109,20 +135,20 @@
         min-height: 100svh;
         display: grid;
         align-items: center;
-        padding: 96px max(20px, env(safe-area-inset-right, 0px)) 64px max(20px, env(safe-area-inset-left, 0px));
+        padding: clamp(76px, 12vh, 96px) max(20px, env(safe-area-inset-right, 0px)) clamp(24px, 8vh, 64px) max(20px, env(safe-area-inset-left, 0px));
     }
     .scene-inner { width: 100%; max-width: 1180px; margin-inline: auto; display: grid; }
     .copy { display: grid; gap: 18px; max-width: 520px; }
     .side-left .copy { justify-self: start; }
     .side-right .copy { justify-self: end; }
 
-    .kicker { color: var(--gold); font-weight: 600; }
-    .big { font-size: clamp(2.4rem, 1.2rem + 5vw, 5.4rem); font-variation-settings: var(--wide); letter-spacing: -0.025em; font-weight: 800; }
-    h2 { font-size: clamp(2rem, 1.2rem + 3.4vw, 3.8rem); font-variation-settings: var(--wide); letter-spacing: -0.02em; }
-    .copy > p { color: var(--soft); font-size: 1.1rem; max-width: 46ch; }
+    .kicker { color: var(--accent); font-weight: 600; }
+    .big { font-size: clamp(2rem, min(0.6rem + 6.4vw, 0.8rem + 9.5vh), 5.4rem); font-variation-settings: var(--wide); letter-spacing: -0.025em; font-weight: 800; }
+    h2 { font-size: clamp(1.7rem, min(1rem + 3.4vw, 1rem + 6vh), 3.8rem); font-variation-settings: var(--wide); letter-spacing: -0.02em; }
+    .copy > p { color: var(--soft); font-size: clamp(1rem, .9rem + .4vw, 1.15rem); max-width: 46ch; }
 
     /* Rotating word in the hero */
-    .swap { display: inline-grid; height: 1.05em; overflow: hidden; vertical-align: bottom; color: var(--gold); }
+    .swap { display: inline-grid; max-width: 100%; height: 1.05em; overflow: hidden; vertical-align: bottom; color: var(--accent); }
     .swap span { grid-area: 1 / 1; transform: translateY(110%); transition: transform .6s cubic-bezier(.3, .8, .2, 1); white-space: nowrap; }
     .swap span.in { transform: translateY(0); }
     .swap span.out { transform: translateY(-110%); }
@@ -134,39 +160,47 @@
         color: var(--text); text-decoration: none; font-weight: 600;
         background: transparent; font: inherit; cursor: pointer;
     }
-    .btn-gold { background: var(--gold); border-color: var(--gold); color: var(--night); }
+    .btn-accent { background: var(--accent); border-color: var(--accent); color: var(--night); }
 
     .services { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
     .services li { padding: 14px 0; border-top: 1px solid var(--line); }
     .services b { display: block; font-size: 1.15rem; }
     .services span { color: var(--soft); }
 
-    /* ---------- Work: pinned horizontal gallery ---------- */
-    .work { position: relative; height: 320vh; }
-    .work-pin { position: sticky; top: 0; height: 100svh; overflow: hidden; display: grid; align-content: center; gap: 28px; }
-    .work-head { padding-inline: max(20px, env(safe-area-inset-left, 0px)); max-width: 1180px; width: 100%; margin-inline: auto; }
-    .track { display: flex; gap: 28px; padding-inline: max(20px, calc((100vw - 1180px) / 2)); will-change: transform; }
+    /* ---------- Work: a swipeable row on touch, small or short screens; pinned to scroll on large mouse screens ---------- */
+    .work { position: relative; padding-block: clamp(76px, 12vh, 110px) 32px; }
+    .work-pin { display: grid; align-content: center; gap: clamp(14px, 3vh, 28px); }
+    .work-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 20px; padding-inline: max(20px, env(safe-area-inset-left, 0px)); max-width: 1180px; width: 100%; margin-inline: auto; }
+    .swipe-hint { color: var(--soft); font-size: .92rem; }
+    .track {
+        display: flex; gap: 20px;
+        padding: 4px max(20px, calc((100vw - 1180px) / 2)) 14px;
+        overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
+        scrollbar-width: none;
+    }
+    .track::-webkit-scrollbar { display: none; }
     .card {
-        flex: 0 0 min(560px, 82vw);
+        scroll-snap-align: center;
+        flex: 0 0 min(560px, 84vw, calc((100svh - 230px) * 1.3));
         display: grid; gap: 14px;
         padding: 16px;
         border: 1px solid var(--line);
         border-radius: 16px;
-        background: rgba(14, 22, 48, .7);
+        background: color-mix(in srgb, var(--panel) 78%, transparent);
         backdrop-filter: blur(6px);
     }
     .card img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top left; border-radius: 10px; display: block; }
-    .card-num { color: var(--gold); font-weight: 700; font-variation-settings: var(--wide); }
+    .card-num { color: var(--accent); font-weight: 700; font-variation-settings: var(--wide); }
     .card h3 { font-size: 1.5rem; font-variation-settings: var(--wide); }
     .card p { color: var(--soft); }
-    .card-next { place-content: center; text-align: center; min-height: 360px; border-style: dashed; }
+    .card-next { place-content: center; text-align: center; min-height: min(360px, 55svh); border-style: dashed; }
     .card-next h3 { font-size: 2rem; }
 
-    @media (max-width: 760px) {
-        .work { height: auto; }
-        .work-pin { position: static; height: auto; padding-block: 96px 40px; }
-        .track { flex-direction: column; padding-inline: max(20px, env(safe-area-inset-left, 0px)); transform: none !important; }
-        .card { flex-basis: auto; }
+    @media (hover: hover) and (pointer: fine) and (min-height: 600px) and (min-aspect-ratio: 9/10) {
+        .work { height: 320vh; padding-block: 0; }
+        .work-pin { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+        .track { overflow: visible; scroll-snap-type: none; will-change: transform; gap: 28px; }
+        .swipe-hint { display: none; }
     }
 
     /* ---------- Process timeline with glowing line ---------- */
@@ -175,27 +209,27 @@
     .steps::after {
         content: ""; position: absolute; left: 6px; top: 6px; width: 2px;
         height: calc(var(--fill, 0) * (100% - 12px));
-        background: linear-gradient(var(--gold), var(--cobalt));
-        box-shadow: 0 0 12px var(--cobalt);
+        background: linear-gradient(var(--accent), var(--accent-2));
+        box-shadow: 0 0 12px var(--accent-2);
     }
     .steps li { position: relative; }
     .steps li::before {
         content: ""; position: absolute; left: -28px; top: 6px; width: 14px; height: 14px; border-radius: 50%;
         background: var(--night); border: 2px solid var(--line); transition: border-color .3s, box-shadow .3s;
     }
-    .steps li.lit::before { border-color: var(--gold); box-shadow: 0 0 12px var(--gold); }
+    .steps li.lit::before { border-color: var(--accent); box-shadow: 0 0 12px var(--accent); }
     .steps h3 { font-size: 1.2rem; }
     .steps p { color: var(--soft); }
 
     /* ---------- Tech stack balls ---------- */
-    .tech { min-height: 100svh; display: grid; grid-template-rows: auto 1fr; padding-top: 96px; }
+    .tech { min-height: 100svh; display: grid; grid-template-rows: auto 1fr; padding-top: clamp(76px, 12vh, 96px); }
     .tech header { padding-inline: max(20px, env(safe-area-inset-left, 0px)); text-align: center; display: grid; gap: 10px; }
     .tech header p { color: var(--soft); }
-    #balls { width: 100%; height: min(70vh, 620px); display: block; touch-action: pan-y; }
+    #balls { width: 100%; height: clamp(300px, 62svh, 620px); display: block; touch-action: pan-y; }
 
     /* ---------- Contact ---------- */
     #contact .copy { max-width: 680px; }
-    .email { font-size: clamp(1.1rem, .55rem + 2.3vw, 2.4rem); font-weight: 800; font-variation-settings: var(--wide); color: var(--gold); white-space: nowrap; }
+    .email { font-size: clamp(1.1rem, .55rem + 2.3vw, 2.4rem); font-weight: 800; font-variation-settings: var(--wide); color: var(--accent); white-space: nowrap; }
     @media (max-width: 420px) { .email { white-space: normal; overflow-wrap: anywhere; } }
     .copied { color: var(--soft); min-height: 1.4em; }
     footer { position: relative; z-index: 1; padding: 24px max(20px, env(safe-area-inset-left, 0px)); color: var(--soft); font-size: .85rem; text-align: center; border-top: 1px solid var(--line); }
@@ -205,20 +239,33 @@
     .glow-dot {
         position: fixed; left: 0; top: 0; z-index: 3; pointer-events: none;
         width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%;
-        background: var(--cobalt); box-shadow: 0 0 18px 6px rgba(110, 139, 255, .6);
+        background: var(--accent-2); box-shadow: 0 0 18px 6px color-mix(in srgb, var(--accent-2) 60%, transparent);
         opacity: 0; transition: opacity .3s;
     }
     @media (hover: hover) and (pointer: fine) { .glow-dot.on { opacity: .9; } }
 
-    /* Phones: the figure stands in the top half, text sits at the bottom of each scene. */
-    @media (max-width: 760px) {
-        .scene { align-items: end; padding-bottom: 48px; }
+    /* Tall screens (portrait phones and tablets): the figure stands in the top part, text sits below it. */
+    @media (max-aspect-ratio: 9/10) {
+        .scene { align-items: end; padding-top: 37svh; padding-bottom: clamp(24px, 5vh, 48px); }
+        .copy { gap: 14px; }
+        .services li { padding: 10px 0; }
+        .steps { gap: 18px; }
         .side-left .copy, .side-right .copy { justify-self: stretch; max-width: none; }
         .scene .copy {
             padding: 22px 18px;
             border-radius: 16px;
-            background: linear-gradient(rgba(7, 11, 24, .55), rgba(7, 11, 24, .92) 18%);
+            background: linear-gradient(color-mix(in srgb, var(--night) 50%, transparent), color-mix(in srgb, var(--night) 93%, transparent) 18%);
         }
+    }
+
+    /* Short landscape screens (phones on their side): tighter spacing so each scene fits. */
+    @media (max-height: 520px) and (min-aspect-ratio: 9/10) {
+        .copy { gap: 10px; max-width: 54%; }
+        .services li { padding: 6px 0; }
+        .services span, .kicker { display: none; }
+        .steps { gap: 10px; }
+        .steps p { display: none; }
+        .card p { display: none; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -239,13 +286,16 @@
 
 <header class="top">
     <a class="brand" href="#hero">Sathvik<span>.</span></a>
-    <nav aria-label="Main">
+    <nav aria-label="Main" id="site-nav">
         <a href="#about">About</a>
         <a href="#services">Services</a>
         <a href="#work">Work</a>
         <a href="#tech">Tech</a>
-        <a class="cta" href="#contact">Get a quote</a>
     </nav>
+    <div class="top-actions">
+        <a class="cta" href="#contact">Get a quote</a>
+        <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    </div>
 </header>
 
 <main id="main">
@@ -258,7 +308,7 @@
                 </h1>
                 <p>Freelance software developer for businesses and churches. Based in Gudivada, India, working with
                     clients anywhere.</p>
-                <div class="buttons"><a class="btn btn-gold" href="#contact">Get a quote</a><a class="btn" href="#work">See my work</a></div>
+                <div class="buttons"><a class="btn btn-accent" href="#contact">Get a quote</a><a class="btn" href="#work">See my work</a></div>
             </div>
         </div>
     </section>
@@ -290,7 +340,7 @@
 
     <section class="work" id="work" data-scene="work" aria-labelledby="work-title">
         <div class="work-pin">
-            <div class="work-head"><h2 id="work-title">My work</h2></div>
+            <div class="work-head"><h2 id="work-title">My work</h2><p class="swipe-hint">Swipe to see more</p></div>
             <div class="track" id="track">
                 <article class="card">
                     <img src="assets/img/projects/gloryboard.webp" alt="GloryBoard control window with song slides" width="960" height="600" loading="lazy">
@@ -309,7 +359,7 @@
                     <span class="card-num">03</span>
                     <h3>Your project</h3>
                     <p>New client work is on the way. Yours could be next.</p>
-                    <div><a class="btn btn-gold" href="#contact">Start a project</a></div>
+                    <div><a class="btn btn-accent" href="#contact">Start a project</a></div>
                 </article>
             </div>
         </div>
@@ -332,7 +382,7 @@
     <section class="tech" id="tech" data-scene="tech" aria-labelledby="tech-title">
         <header>
             <h2 id="tech-title">My tech stack</h2>
-            <p>Push the balls around with your mouse or finger.</p>
+            <p>Tap the balls, or push them around with your mouse.</p>
         </header>
         <canvas id="balls" aria-label="Bouncing balls labelled JavaScript, Python, Node.js, Electron, Flask, SQL and more"></canvas>
     </section>
@@ -343,7 +393,7 @@
                 <h2 id="contact-title">Tell me about your project</h2>
                 <p>Send a few lines about what you need. I’ll reply within a day.</p>
                 <span class="email" id="email">sathvikrinny@gmail.com</span>
-                <div class="buttons"><button class="btn btn-gold" type="button" id="copy">Copy email</button></div>
+                <div class="buttons"><button class="btn btn-accent" type="button" id="copy">Copy email</button></div>
                 <p class="copied" id="copied" role="status"></p>
             </div>
         </div>
@@ -354,17 +404,41 @@
 <script type="importmap">
 {
   "imports": {
-    "three": "./assets/vendor/three/three.module.js"
+    "three": "./assets/vendor/three/three.module.min.js"
   }
 }
 </script>
 <script type="module">
 import * as THREE from 'three';
-import { GLTFLoader } from './assets/vendor/three/GLTFLoader.js';
+import { GLTFLoader } from './assets/vendor/three/GLTFLoader.min.js';
 
 (function () {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const isPhone = () => window.innerWidth <= 760;
+    // Layout follows the screen's shape: tall screens stack the figure above the text.
+    const stackedMQ = window.matchMedia('(max-aspect-ratio: 9/10)');
+    const pinnedMQ = window.matchMedia('(hover: hover) and (pointer: fine) and (min-height: 600px) and (min-aspect-ratio: 9/10)');
+    const isStacked = () => stackedMQ.matches;
+
+    // Read the palette from CSS so the 3D lights and textures match the page colours.
+    const css = getComputedStyle(document.documentElement);
+    const token = name => css.getPropertyValue(name).trim();
+    const ACCENT = token('--accent') || '#FF9E7A';
+    const ACCENT2 = token('--accent-2') || '#A99BFF';
+    const NIGHT = token('--night') || '#120E1F';
+    const rgba = (hex, a) => { const c = new THREE.Color(hex); return `rgba(${Math.round(c.r * 255)},${Math.round(c.g * 255)},${Math.round(c.b * 255)},${a})`; };
+
+    /* ---------------- Mobile menu ---------------- */
+    const menuBtn = document.querySelector('.menu-btn');
+    const nav = document.getElementById('site-nav');
+    function setMenu(open) {
+        nav.classList.toggle('open', open);
+        menuBtn.setAttribute('aria-expanded', String(open));
+        menuBtn.textContent = open ? 'Close' : 'Menu';
+        document.body.style.overflow = open ? 'hidden' : '';
+    }
+    menuBtn.addEventListener('click', () => setMenu(!nav.classList.contains('open')));
+    nav.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && nav.classList.contains('open')) { setMenu(false); menuBtn.focus(); } });
 
     /* ---------------- Rotating word ---------------- */
     const words = Array.from(document.querySelectorAll('.swap span'));
@@ -395,16 +469,16 @@ import { GLTFLoader } from './assets/vendor/three/GLTFLoader.js';
         document.getElementById('loading').innerHTML = '<div><b>3D could not start</b>Your browser or device does not support WebGL. Try a different browser.</div>';
         return;
     }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isStacked() ? 1.5 : 2));
     renderer.outputEncoding = THREE.sRGBEncoding;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
 
-    scene.add(new THREE.HemisphereLight(0xc8d4ff, 0x0b1020, 1.1));
+    scene.add(new THREE.HemisphereLight(0xffffff, new THREE.Color(NIGHT), 1.1));
     const key = new THREE.DirectionalLight(0xffffff, 1.7); key.position.set(3, 6, 6); scene.add(key);
-    const goldLight = new THREE.PointLight(0xffc857, 2.2, 14); goldLight.position.set(-2.5, 3.5, 3); scene.add(goldLight);
-    const rim = new THREE.DirectionalLight(0x6e8bff, 2.0); rim.position.set(-4, 3, -5); scene.add(rim);
+    const goldLight = new THREE.PointLight(new THREE.Color(ACCENT), 2.2, 14); goldLight.position.set(-2.5, 3.5, 3); scene.add(goldLight);
+    const rim = new THREE.DirectionalLight(new THREE.Color(ACCENT2), 2.0); rim.position.set(-4, 3, -5); scene.add(rim);
 
     // Soft glowing floor disc that follows the figure
     function radialTexture(inner, outer) {
@@ -414,7 +488,7 @@ import { GLTFLoader } from './assets/vendor/three/GLTFLoader.js';
         return new THREE.CanvasTexture(c);
     }
     const floor = new THREE.Mesh(new THREE.CircleGeometry(1.6, 48),
-        new THREE.MeshBasicMaterial({ map: radialTexture('rgba(110,139,255,0.55)', 'rgba(110,139,255,0)'), transparent: true, depthWrite: false }));
+        new THREE.MeshBasicMaterial({ map: radialTexture(rgba(ACCENT2, 0.55), rgba(ACCENT2, 0)), transparent: true, depthWrite: false }));
     floor.rotation.x = -Math.PI / 2; scene.add(floor);
 
     /* Desk scene for "What I build" */
@@ -432,13 +506,13 @@ import { GLTFLoader } from './assets/vendor/three/GLTFLoader.js';
     const monitor = new THREE.Group(); monitor.add(bezel); screen.position.z = .021; monitor.add(screen);
     monitor.position.set(1.25, 1.33, 0); monitor.rotation.y = -Math.PI / 2; desk.add(monitor);
     const stand = new THREE.Mesh(new THREE.BoxGeometry(.06, .2, .06), darkMat); stand.position.set(1.28, .98, 0); desk.add(stand);
-    const screenGlow = new THREE.PointLight(0x6e8bff, 1.6, 3); screenGlow.position.set(1.0, 1.35, 0); desk.add(screenGlow);
+    const screenGlow = new THREE.PointLight(new THREE.Color(ACCENT2), 1.6, 3); screenGlow.position.set(1.0, 1.35, 0); desk.add(screenGlow);
     const chairSeat = new THREE.Mesh(new THREE.BoxGeometry(.55, .06, .55), darkMat); chairSeat.position.set(0, .52, 0); desk.add(chairSeat);
     const chairBack = new THREE.Mesh(new THREE.BoxGeometry(.06, .6, .5), darkMat); chairBack.position.set(-.3, .85, 0); desk.add(chairBack);
     const chairLeg = new THREE.Mesh(new THREE.CylinderGeometry(.04, .04, .5), darkMat); chairLeg.position.set(0, .26, 0); desk.add(chairLeg);
     desk.visible = false; scene.add(desk);
 
-    const codeLines = Array.from({ length: 40 }, () => ({ indent: Math.floor(Math.random() * 4), w: 60 + Math.random() * 240, c: ['#FFC857', '#6E8BFF', '#F5F2EA', '#7FD1AE'][Math.floor(Math.random() * 4)] }));
+    const codeLines = Array.from({ length: 40 }, () => ({ indent: Math.floor(Math.random() * 4), w: 60 + Math.random() * 240, c: [ACCENT, ACCENT2, '#F5F2EA', '#7FD1AE'][Math.floor(Math.random() * 4)] }));
     let codeScroll = 0;
     function drawCode(dt) {
         codeScroll += dt * 28;
@@ -457,15 +531,16 @@ import { GLTFLoader } from './assets/vendor/three/GLTFLoader.js';
     let mixer = null, actions = {}, current = null, headBone = null;
     const holder = new THREE.Group(); scene.add(holder);
     const look = { x: 0, y: 0 };
+    let stageCleared = false;
 
     const SCENES = {
         // then: undefined = loop forever, 'hold' = play once and stay, a clip name = play once then loop that clip
         hero:    { x: 1.75, y: 0, ry: -0.35, anim: 'Wave', then: 'Idle', spot: '70%' },
         about:   { x: -1.85, y: 0, ry: 0.45, anim: 'Yes', then: 'Idle', spot: '30%' },
         desk:    { x: 1.2, y: 0, ry: Math.PI / 2, anim: 'Sitting', then: 'hold', spot: '72%', desk: true },
-        work:    { x: 0, y: -5, ry: 0, anim: 'Idle', spot: '50%' },
+        work:    { x: 0, y: -8, ry: 0, anim: 'Idle', spot: '50%' },
         process: { x: -1.9, y: 0, ry: 0.5, anim: 'Idle', spot: '30%' },
-        tech:    { x: 0, y: -5, ry: 0, anim: 'Idle', spot: '50%' },
+        tech:    { x: 0, y: -8, ry: 0, anim: 'Idle', spot: '50%' },
         contact: { x: 1.75, y: 0, ry: -0.3, anim: 'ThumbsUp', then: 'Idle', spot: '70%' },
     };
     let active = 'hero';
@@ -514,8 +589,12 @@ import { GLTFLoader } from './assets/vendor/three/GLTFLoader.js';
         if (name === active && !force) return;
         active = name;
         const s = SCENES[name];
-        const phone = isPhone();
-        target.x = phone ? (s.desk ? -0.15 : 0) : s.x;
+        const phone = isStacked();
+        // Fluid sideways position: worked out from how wide the visible stage is, so the figure never leaves the screen.
+        const halfW = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z * camera.aspect;
+        if (phone) target.x = s.desk ? -0.15 : 0;
+        else if (s.desk) target.x = Math.max(0.2, Math.min(s.x, halfW * 0.92 - 1.6));
+        else target.x = s.x === 0 ? 0 : Math.sign(s.x) * Math.min(Math.abs(s.x), halfW * 0.55);
         target.y = s.y;
         target.ry = s.ry;
         desk.visible = !!s.desk;
@@ -544,7 +623,8 @@ import { GLTFLoader } from './assets/vendor/three/GLTFLoader.js';
         renderer.setSize(w, h, false);
         camera.aspect = w / h;
         // Phones: a smaller figure in the top part of the screen, above the text panel.
-        if (isPhone()) { camera.fov = 40; camera.position.set(0, 1.2, 8.4); camera.lookAt(0, -0.7, 0); holder.scale.setScalar(.8); desk.scale.setScalar(.8); floor.scale.setScalar(.8); }
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, isStacked() ? 1.5 : 2));
+        if (isStacked()) { camera.fov = 40; camera.position.set(0, 1.2, 8.4); camera.lookAt(0, -0.7, 0); holder.scale.setScalar(.8); desk.scale.setScalar(.8); floor.scale.setScalar(.8); }
         else { camera.fov = 32; camera.position.set(0, 1.6, 9); camera.lookAt(0, 1.15, 0); holder.scale.setScalar(1); desk.scale.setScalar(1); floor.scale.setScalar(1); }
         camera.updateProjectionMatrix();
         setScene(active, true);
@@ -556,7 +636,7 @@ import { GLTFLoader } from './assets/vendor/three/GLTFLoader.js';
     const work = document.getElementById('work');
     const track = document.getElementById('track');
     function moveTrack() {
-        if (isPhone()) { track.style.transform = ''; return; }
+        if (!pinnedMQ.matches) { track.style.transform = ''; return; }
         const r = work.getBoundingClientRect();
         const total = work.offsetHeight - window.innerHeight;
         const p = Math.min(1, Math.max(0, -r.top / total));
@@ -588,6 +668,8 @@ import { GLTFLoader } from './assets/vendor/three/GLTFLoader.js';
         holder.position.set(state.x, state.y, 0);
         holder.rotation.y = state.ry;
         floor.position.set(state.x, state.y + .01, 0);
+        const onStage = state.y > -3;
+        holder.visible = onStage;
         floor.visible = state.y > -2;
         desk.position.set(state.x, state.y, 0);
         desk.rotation.y = state.ry - Math.PI / 2;
@@ -602,7 +684,9 @@ import { GLTFLoader } from './assets/vendor/three/GLTFLoader.js';
             headBone.rotation.y += look.y; headBone.rotation.x += look.x;
         }
         if (desk.visible) drawCode(dt);
-        renderer.render(scene, camera);
+        // Skip drawing while the figure is off stage (work and tech sections): saves battery on phones.
+        if (onStage || desk.visible) { renderer.render(scene, camera); stageCleared = false; }
+        else if (!stageCleared) { renderer.clear(); stageCleared = true; }
         requestAnimationFrame(loop);
     }
     requestAnimationFrame(loop);
@@ -610,13 +694,13 @@ import { GLTFLoader } from './assets/vendor/three/GLTFLoader.js';
     /* ---------------- Tech stack balls ---------------- */
     const ballsCanvas = document.getElementById('balls');
     const bRenderer = new THREE.WebGLRenderer({ canvas: ballsCanvas, antialias: true, alpha: true });
-    bRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    bRenderer.setPixelRatio(Math.min(window.devicePixelRatio, isStacked() ? 1.5 : 2));
     bRenderer.outputEncoding = THREE.sRGBEncoding;
     const bScene = new THREE.Scene();
     const bCam = new THREE.PerspectiveCamera(35, 1, .1, 100);
     bScene.add(new THREE.HemisphereLight(0xffffff, 0x1b2340, 1.2));
     const bKey = new THREE.DirectionalLight(0xffffff, 1.4); bKey.position.set(2, 5, 6); bScene.add(bKey);
-    const bGold = new THREE.PointLight(0xffc857, 1.5, 20); bGold.position.set(-4, 4, 4); bScene.add(bGold);
+    const bGold = new THREE.PointLight(new THREE.Color(ACCENT), 1.5, 20); bGold.position.set(-4, 4, 4); bScene.add(bGold);
 
     const TECH = [
         ['JavaScript', '#F7DF1E', '#111'], ['Python', '#3776AB', '#FFD43B'], ['Node.js', '#3C873A', '#fff'],
@@ -665,12 +749,22 @@ import { GLTFLoader } from './assets/vendor/three/GLTFLoader.js';
 
     const pointer3 = new THREE.Vector3(999, 999, 0); let pointerActive = false;
     const ray = new THREE.Raycaster(); const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
-    ballsCanvas.addEventListener('pointermove', e => {
+    function setPointer(e) {
         const r = ballsCanvas.getBoundingClientRect();
         const ndc = new THREE.Vector2(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
-        ray.setFromCamera(ndc, bCam); ray.ray.intersectPlane(plane, pointer3); pointerActive = true;
-    });
+        ray.setFromCamera(ndc, bCam); ray.ray.intersectPlane(plane, pointer3);
+    }
+    // Mouse: balls are pushed away from the pointer as it moves.
+    ballsCanvas.addEventListener('pointermove', e => { if (e.pointerType === 'mouse') { setPointer(e); pointerActive = true; } });
     ballsCanvas.addEventListener('pointerleave', () => { pointerActive = false; });
+    // Tap or click: kick nearby balls up and away (works on touch, where the browser keeps moves for scrolling).
+    ballsCanvas.addEventListener('pointerdown', e => {
+        setPointer(e);
+        balls.forEach(b => {
+            tmp.subVectors(b.p, pointer3); tmp.z = 0; const d = tmp.length();
+            if (d < 2.4) { b.v.addScaledVector(tmp.normalize(), (2.4 - d) * 6); b.v.y += (2.4 - d) * 5; }
+        });
+    });
 
     let ballsVisible = false, dropped = false;
     new IntersectionObserver(es => {
