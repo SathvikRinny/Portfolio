@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
 <script>
-    try { const pal = new URLSearchParams(location.search).get('palette'); if (pal) document.documentElement.dataset.palette = pal; } catch (e) {}
+    try { const q = new URLSearchParams(location.search); const pal = q.get('palette'); if (pal) document.documentElement.dataset.palette = pal; document.documentElement.dataset.mobile = q.get('mobile') === 'b' ? 'b' : 'a'; } catch (e) { document.documentElement.dataset.mobile = 'a'; }
 </script>
 <style>
     /* Layout: a fixed 3D stage behind full-height scenes. Wide screens put text beside the figure; tall
@@ -244,18 +244,50 @@
     }
     @media (hover: hover) and (pointer: fine) { .glow-dot.on { opacity: .9; } }
 
-    /* Tall screens (portrait phones and tablets): the figure stands in the top part, text sits below it. */
+    /* Tall screens (portrait phones and tablets): the figure never sits behind the text.
+       Mode A "stage window": the figure has its own framed stage at the top; the text scrolls up underneath it.
+       Mode B "guide bubble": the figure starts big in the hero, then shrinks into a round bubble in the corner. */
+    .hero-slot { display: none; }
     @media (max-aspect-ratio: 9/10) {
-        .scene { align-items: end; padding-top: 37svh; padding-bottom: clamp(24px, 5vh, 48px); }
+        .scene { min-height: auto; align-items: start; padding: 30px max(20px, env(safe-area-inset-right, 0px)) 34px max(20px, env(safe-area-inset-left, 0px)); }
         .copy { gap: 14px; }
         .services li { padding: 10px 0; }
         .steps { gap: 18px; }
         .side-left .copy, .side-right .copy { justify-self: stretch; max-width: none; }
-        .scene .copy {
-            padding: 22px 18px;
-            border-radius: 16px;
-            background: linear-gradient(color-mix(in srgb, var(--night) 50%, transparent), color-mix(in srgb, var(--night) 93%, transparent) 18%);
+        #about, #services, .work, #process, .tech, #contact { border-top: 1px solid var(--line); }
+        .work, .tech { padding-top: 30px; min-height: auto; }
+        .spotlight { display: none; }
+
+        :root[data-mobile="a"] { --stage-h: 44svh; }
+        :root[data-mobile="a"].compact { --stage-h: 30svh; }
+        [data-mobile="a"] #stage {
+            inset: 0 0 auto 0; height: var(--stage-h); z-index: 3;
+            background:
+                radial-gradient(60% 55% at 50% 62%, color-mix(in srgb, var(--accent) 24%, transparent), transparent 72%),
+                radial-gradient(80% 70% at 50% 100%, color-mix(in srgb, var(--accent-2) 22%, transparent), transparent 70%),
+                var(--panel);
+            border-bottom: 1px solid var(--line);
+            border-radius: 0 0 28px 28px;
+            box-shadow: 0 20px 40px -24px rgba(0, 0, 0, .7);
+            transition: height .45s cubic-bezier(.3, .8, .2, 1);
         }
+        [data-mobile="a"] main { padding-top: calc(44svh + 6px); }
+        [data-mobile="a"] .top { background: none; }
+
+        [data-mobile="b"] #stage {
+            inset: auto; left: 0; top: 0;
+            width: var(--slot, 280px); height: var(--slot, 280px);
+            z-index: 3; transform-origin: 0 0; border-radius: 50%;
+            background:
+                radial-gradient(60% 60% at 50% 60%, color-mix(in srgb, var(--accent) 28%, transparent), transparent 72%),
+                var(--panel);
+            border: 3px solid color-mix(in srgb, var(--accent) 75%, transparent);
+            box-shadow: 0 16px 36px -14px rgba(0, 0, 0, .75);
+            cursor: pointer; touch-action: pan-y;
+        }
+        [data-mobile="b"] .hero-slot { display: block; width: min(66vw, 300px); aspect-ratio: 1; margin: 4px auto 8px; }
+        [data-mobile="b"] main { padding-top: 68px; }
+        [data-mobile="b"] .top { background: var(--night); border-bottom: 1px solid var(--line); }
     }
 
     /* Short landscape screens (phones on their side): tighter spacing so each scene fits. */
@@ -302,6 +334,7 @@
     <section class="scene side-left" id="hero" data-scene="hero" aria-labelledby="hero-title">
         <div class="scene-inner">
             <div class="copy">
+                <div class="hero-slot" aria-hidden="true"></div>
                 <p class="kicker">Sathvik Raju Pothureddy</p>
                 <h1 class="big" id="hero-title">I build
                     <span class="swap" aria-live="polite"><span class="in">websites</span><span>web apps</span><span>desktop apps</span><span>AI tools</span></span>
@@ -418,6 +451,9 @@ import { GLTFLoader } from './assets/vendor/three/GLTFLoader.min.js';
     const stackedMQ = window.matchMedia('(max-aspect-ratio: 9/10)');
     const pinnedMQ = window.matchMedia('(hover: hover) and (pointer: fine) and (min-height: 600px) and (min-aspect-ratio: 9/10)');
     const isStacked = () => stackedMQ.matches;
+    const MODE = document.documentElement.dataset.mobile || 'a';
+    // On tall screens the figure stays on stage in every section; these poses replace the hidden ones.
+    const STACKED_POSE = { work: ['Idle'], tech: ['Dance'], desk: MODE === 'b' ? ['Jump', 'Idle'] : null };
 
     // Read the palette from CSS so the 3D lights and textures match the page colours.
     const css = getComputedStyle(document.documentElement);
@@ -592,14 +628,16 @@ import { GLTFLoader } from './assets/vendor/three/GLTFLoader.min.js';
         const phone = isStacked();
         // Fluid sideways position: worked out from how wide the visible stage is, so the figure never leaves the screen.
         const halfW = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z * camera.aspect;
-        if (phone) target.x = s.desk ? -0.15 : 0;
+        const showDesk = !!s.desk && (!phone || MODE === 'a');
+        if (phone) target.x = showDesk ? -0.75 : 0;
         else if (s.desk) target.x = Math.max(0.2, Math.min(s.x, halfW * 0.92 - 1.6));
         else target.x = s.x === 0 ? 0 : Math.sign(s.x) * Math.min(Math.abs(s.x), halfW * 0.55);
-        target.y = s.y;
-        target.ry = s.ry;
-        desk.visible = !!s.desk;
+        target.y = phone ? 0 : s.y;
+        target.ry = phone ? (showDesk ? s.ry : THREE.MathUtils.clamp(s.ry, -0.4, 0.4)) : s.ry;
+        desk.visible = showDesk;
         document.getElementById('spot').style.setProperty('--spot-x', phone ? '50%' : s.spot);
-        if (s.anim && mixer) play(s.anim, s.then);
+        const pose = phone && STACKED_POSE[name] ? STACKED_POSE[name] : [s.anim, s.then];
+        if (pose[0] && mixer) play(pose[0], pose[1]);
         document.querySelectorAll('.top nav a').forEach(a => {
             const id = a.getAttribute('href').slice(1);
             const match = (name === 'desk' && id === 'services') || id === name;
@@ -618,19 +656,52 @@ import { GLTFLoader } from './assets/vendor/three/GLTFLoader.min.js';
         setScene(best.dataset.scene);
     }
 
+    const heroSlot = document.querySelector('.hero-slot');
     function resize() {
-        const w = window.innerWidth, h = window.innerHeight;
+        const stacked = isStacked();
+        let w = window.innerWidth, h = window.innerHeight;
+        if (stacked && MODE === 'a') { w = canvas.clientWidth; h = canvas.clientHeight; }
+        if (stacked && MODE === 'b') {
+            const size = heroSlot.getBoundingClientRect().width || 280;
+            document.documentElement.style.setProperty('--slot', size + 'px');
+            w = h = size;
+        }
+        if (!stacked) canvas.style.transform = '';
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, stacked ? 1.5 : 2));
         renderer.setSize(w, h, false);
         camera.aspect = w / h;
-        // Phones: a smaller figure in the top part of the screen, above the text panel.
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, isStacked() ? 1.5 : 2));
-        if (isStacked()) { camera.fov = 40; camera.position.set(0, 1.2, 8.4); camera.lookAt(0, -0.7, 0); holder.scale.setScalar(.8); desk.scale.setScalar(.8); floor.scale.setScalar(.8); }
-        else { camera.fov = 32; camera.position.set(0, 1.6, 9); camera.lookAt(0, 1.15, 0); holder.scale.setScalar(1); desk.scale.setScalar(1); floor.scale.setScalar(1); }
+        if (stacked && MODE === 'a') { camera.fov = 30; camera.position.set(0, 1.3, 7.2); camera.lookAt(0, 1.05, 0); }
+        else if (stacked) { camera.fov = 30; camera.position.set(0, 1.35, 6.4); camera.lookAt(0, 1.1, 0); }
+        else { camera.fov = 32; camera.position.set(0, 1.6, 9); camera.lookAt(0, 1.15, 0); }
+        holder.scale.setScalar(1); desk.scale.setScalar(1); floor.scale.setScalar(1);
         camera.updateProjectionMatrix();
         setScene(active, true);
     }
     window.addEventListener('resize', resize);
+    canvas.addEventListener('transitionend', e => { if (e.propertyName === 'height') resize(); });
+    // Tap the figure on a phone to make it wave.
+    canvas.addEventListener('click', () => { if (isStacked() && mixer) play('Wave', 'Idle'); });
     resize();
+
+    /* Mode A: the stage shrinks once you start reading. Mode B: the bubble moves from the hero to the corner. */
+    function placeStage() {
+        if (!isStacked()) return;
+        if (MODE === 'a') {
+            document.documentElement.classList.toggle('compact', window.scrollY > window.innerHeight * 0.22);
+            return;
+        }
+        const r = heroSlot.getBoundingClientRect();
+        const S = r.width || 280, D = 76, top = 70;
+        const t = Math.min(1, Math.max(0, (top - r.top) / (S * 0.6)));
+        // Shrink and slide to the right edge first, then drop to the corner, so it never sweeps across the text.
+        const ex = Math.min(1, t * 2.2), es = Math.min(1, t * 1.8);
+        const ey = t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+        const size = S + (D - S) * es;
+        const x = r.left + (window.innerWidth - D - 14 - r.left) * ex;
+        const y = Math.max(top + 6, r.top) + (window.innerHeight - D - 20 - Math.max(top + 6, r.top)) * ey;
+        const sc = size / S;
+        canvas.style.transform = `translate(${x}px, ${y}px) scale(${sc})`;
+    }
 
     /* ---------------- Work gallery: vertical scroll moves the cards sideways ---------------- */
     const work = document.getElementById('work');
@@ -654,8 +725,9 @@ import { GLTFLoader } from './assets/vendor/three/GLTFLoader.min.js';
         stepItems.forEach((li, i) => li.classList.toggle('lit', p >= i / stepItems.length + 0.02));
     }
 
-    window.addEventListener('scroll', () => { pickScene(); moveTrack(); fillSteps(); }, { passive: true });
-    pickScene(); moveTrack(); fillSteps();
+    window.addEventListener('scroll', () => { pickScene(); moveTrack(); fillSteps(); placeStage(); }, { passive: true });
+    window.addEventListener('resize', placeStage);
+    pickScene(); moveTrack(); fillSteps(); placeStage();
 
     /* ---------------- Render loop ---------------- */
     const clock = new THREE.Clock();
